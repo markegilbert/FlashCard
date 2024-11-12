@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Skip the launchSettings file since it contains the primary key value to access the Cosmos DB emulator locally.
+DataImporter/Properties/launchSettings.json
