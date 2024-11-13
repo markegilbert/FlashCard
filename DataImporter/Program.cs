@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
-using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace DataImporter
@@ -16,6 +17,8 @@ namespace DataImporter
             Database CosmosDatabase;
             Container CosmosContainer;
             CosmosDBSettings Settings;
+            String RawDataFileContents;
+            int RecordCounter;
 
             _LogAs = NLog.LogManager.GetCurrentClassLogger();
 
@@ -30,8 +33,8 @@ namespace DataImporter
                 #region Logging
                 ReportStatus("Reading in command line arguments...");
                 #endregion
-                PrimaryKey = args.ExtractValueFor("PrimaryKey");
-                PathToDataFile = args.ExtractValueFor("PathToDataFile");
+                PrimaryKey = args.ExtractValueFor("PrimaryKey", ValueIsRequired: true);
+                PathToDataFile = args.ExtractValueFor("PathToDataFile", ValueIsRequired: true);
 
                 #region Logging
                 ReportStatus("Loading up the config file settings...");
@@ -40,9 +43,10 @@ namespace DataImporter
                     .AddJsonFile("appsettings.json")
                     .Build()
                     .GetRequiredSection(CosmosDBSettings.SettingsName)
-                    .Get<CosmosDBSettings>();
+                    .Get<CosmosDBSettings>()
+                    .ValidateDataAnnotations<CosmosDBSettings>();
 
-                // TODO: Validate that the parameters all have values - config file and arguments
+
 
 
                 #region Logging
@@ -58,55 +62,21 @@ namespace DataImporter
                 #endregion
 
 
-
-                // ********************************************************************************
-                // TODO: Remove this test data once the data file is being read in.
-                var item1 = new
+                #region Logging
+                ReportStatus($"Loading data from {PathToDataFile}...");
+                #endregion
+                RawDataFileContents = LoadDataFromFile(PathToDataFile);
+                dynamic FileContentsAsJson = JsonConvert.DeserializeObject(RawDataFileContents);
+                RecordCounter = 1;
+                foreach (JToken CurrentItem in FileContentsAsJson)
                 {
-                    id = "1",
-                    question = "What is your name?",
-                    answer = "Arthur, King of the Britons",
-                    topic = new
-                    {
-                        id = "1",
-                        topicName = "Monty Python Questions"
-                    },
-                    createdOn = "2024-11-12"
-                };
-                var item2 = new
-                {
-                    id = "2",
-                    question = "What is your quest?",
-                    answer = "To seek the grail",
-                    topic = new
-                    {
-                        id = "1",
-                        topicName = "Monty Python Questions"
-                    },
-                    createdOn = "2024-11-12"
-                };
-                var item3 = new
-                {
-                    id = "3",
-                    question = "What is the airspeed velocity of an unladen swallow?",
-                    answer = "African or European swallow?",
-                    topic = new
-                    {
-                        id = "1",
-                        topicName = "Monty Python Questions"
-                    },
-                    createdOn = "2024-11-12"
-                };
+                    await CosmosContainer.UpsertItemAsync(CurrentItem);
+                    #region Logging
+                    ReportStatus($"Question #{RecordCounter} upserted");
+                    #endregion
 
-
-                await CosmosContainer.UpsertItemAsync(item1);
-                ReportStatus("Question 1 upserted");
-                await CosmosContainer.UpsertItemAsync(item2);
-                ReportStatus("Question 1 upserted");
-                await CosmosContainer.UpsertItemAsync(item3);
-                ReportStatus("Question 1 upserted");
-                // ********************************************************************************
-
+                    RecordCounter++;
+                }
 
                 Console.WriteLine("Done - press any key to exit");
                 Console.ReadLine();
@@ -117,17 +87,17 @@ namespace DataImporter
             catch (Exception ex)
             {
                 _LogAs.Error(ex);
-                Console.WriteLine("Application exiting with an error; check the logs for details");
+                Console.WriteLine("Application exiting with an error; check the logs for details.");
                 Environment.Exit(-1);
             }
 
         }
 
 
-        //private static Stream FileContents(String DataFilePath)
-        //{
-        //    return File.OpenRead(DataFilePath);
-        //}
+        private static String LoadDataFromFile(String DataFilePath)
+        {
+            return File.ReadAllText(DataFilePath);
+        }
 
 
         // Adapted from "Using the Azure Cosmos DB emulator to develop locally", by
@@ -149,6 +119,7 @@ namespace DataImporter
             _LogAs?.Info(Message);
             Console.WriteLine(Message);
         }
+
 
 
     }

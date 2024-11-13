@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace DataImporter
 {
@@ -12,6 +9,12 @@ namespace DataImporter
         public const String SettingsName = "CosmosDBSettings";
 
         private String _AccountEndpoint = "";
+        private String _DatabaseName = "";
+        private String _ContainerID = "";
+        private String _ContainerPartitionKeyPath = "";
+
+
+        [Required()]
         public String AccountEndpoint 
         { 
             get { return this._AccountEndpoint; }
@@ -22,7 +25,7 @@ namespace DataImporter
             }
         }
 
-        private String _DatabaseName = "";
+        [Required()]
         public String DatabaseName
         {
             get { return this._DatabaseName; }
@@ -33,7 +36,7 @@ namespace DataImporter
             }
         }
 
-        private String _ContainerID = "";
+        [Required()]
         public String ContainerID
         {
             get { return this._ContainerID; }
@@ -44,7 +47,7 @@ namespace DataImporter
             }
         }
 
-        private String _ContainerPartitionKeyPath = "";
+        [Required()]
         public String ContainerPartitionKeyPath
         {
             get { return this._ContainerPartitionKeyPath; }
@@ -54,7 +57,5 @@ namespace DataImporter
                 this._ContainerPartitionKeyPath = value; 
             }
         }
-
-
     }
 }
