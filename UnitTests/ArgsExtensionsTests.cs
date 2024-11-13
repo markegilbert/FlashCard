@@ -6,7 +6,7 @@ using System;
 namespace UnitTests
 {
     [TestFixture]
-    public class ArgumentTests
+    public class ArgsExtensionsTests
     {
         private ArgumentException? _ArgumentException;
         private String[] _Args;
