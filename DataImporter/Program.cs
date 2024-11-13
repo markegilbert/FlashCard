@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos;
+using System.Runtime.CompilerServices;
 
 namespace DataImporter
 {
@@ -6,13 +7,15 @@ namespace DataImporter
     {
         static async Task Main(string[] args)
         {
-            Argument CommandLineArgs;
             String PrimaryKey;
+            String PathToDataFile;
             Database CosmosDatabase;
             Container CosmosContainer;
 
-            CommandLineArgs = new Argument(args);
-            PrimaryKey = CommandLineArgs.ExtractValueFor("primarykey");
+            PrimaryKey = args.ExtractValueFor("PrimaryKey");
+            PathToDataFile = args.ExtractValueFor("PathToDataFile");
+
+            // TODO: Validate that the requirement parameters all have values
 
             // TODO: Move the AccountEndpoint and DatabaseName to the config file
             CosmosDatabase = await InitializeDatabase("https://localhost:8081", PrimaryKey, "flashcard");
@@ -22,6 +25,8 @@ namespace DataImporter
 
 
 
+            // ********************************************************************************
+            // TODO: Remove this test data once the data file is being read in.
             var item1 = new
             {
                 id = "1",
@@ -66,6 +71,8 @@ namespace DataImporter
             Console.WriteLine("Question 1 upserted");
             await CosmosContainer.UpsertItemAsync(item3);
             Console.WriteLine("Question 1 upserted");
+            // ********************************************************************************
+
 
             Console.WriteLine("Done - press any key to exit");
             Console.ReadLine();
@@ -85,10 +92,8 @@ namespace DataImporter
             CosmosClient Server;
             Database CosmosDatabase;
 
-
             Server = new CosmosClient(accountEndpoint: AccountEndpoint, authKeyOrResourceToken: PrimaryKey);
             CosmosDatabase = await Server.CreateDatabaseIfNotExistsAsync(id: DatabaseName, throughput: 400);
-
 
             return CosmosDatabase;
         }
