@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "question": "What is your name?",
+    "answer": "Arthur, King of the Britons",
+    "topic": {
+      "id": "MontyPythonQuestions",
+      "topicName": "Monty Python Questions"
+    },
+    "partitionKey": "MontyPythonQuestions",
+    "createdOn": "2024-11-12"
+  },
+  {
+    "id": "2",
+    "question": "What is your quest?",
+    "answer": "To seek the grail",
+    "topic": {
+      "id": "MontyPythonQuestions",
+      "topicName": "Monty Python Questions"
+    },
+    "partitionKey": "MontyPythonQuestions",
+    "createdOn": "2024-11-12"
+  },
+  {
+    "id": "3",
+    "question": "What is the airspeed velocity of an unladen swallow?",
+    "answer": "African or European swallow?",
+    "topic": {
+      "id": "MontyPythonQuestions",
+      "topicName": "Monty Python Questions"
+    },
+    "partitionKey": "MontyPythonQuestions",
+    "createdOn": "2024-11-12"
+  },
+  {
+    "id": "4",
+    "question": "What is the answer to the ultimate question of life, the universe, and everything?",
+    "answer": "42",
+    "topic": {
+      "id": "HitchhikersGuideQuestions",
+      "topicName": "Hitchhiker's Guide to the Galaxy"
+    },
+    "partitionKey": "HitchhikersGuideQuestions",
+    "createdOn": "2024-11-12"
+  }  
+]

@@ -15,7 +15,7 @@ namespace DataImporter
             String PrimaryKey;
             String PathToDataFile;
             Database CosmosDatabase;
-            Container CosmosContainer;
+            Container FlashCardContainer, TopicContainer;
             CosmosDBSettings Settings;
             String RawDataFileContents;
             int RecordCounter;
@@ -56,7 +56,8 @@ namespace DataImporter
                 #region Logging
                 ReportStatus("Database was created and/or verified");
                 #endregion
-                CosmosContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: Settings.ContainerID, partitionKeyPath: Settings.ContainerPartitionKeyPath);
+                FlashCardContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: Settings.ContainerID, partitionKeyPath: Settings.ContainerPartitionKeyPath);
+                TopicContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: "topic", partitionKeyPath: "/id");
                 #region Logging
                 ReportStatus("Container was created and/or verified");
                 #endregion
@@ -70,7 +71,8 @@ namespace DataImporter
                 RecordCounter = 1;
                 foreach (JToken CurrentItem in FileContentsAsJson)
                 {
-                    await CosmosContainer.UpsertItemAsync(CurrentItem);
+                    await FlashCardContainer.UpsertItemAsync(CurrentItem);
+                    await TopicContainer.UpsertItemAsync(CurrentItem["topic"]);
                     #region Logging
                     ReportStatus($"Question #{RecordCounter} upserted");
                     #endregion
