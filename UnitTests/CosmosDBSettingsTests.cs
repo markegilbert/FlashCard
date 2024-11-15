@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using DataImporter;
+﻿using NUnit.Framework;
+using FlashCard.Configuration;
 
 namespace UnitTests
 {
@@ -53,36 +48,33 @@ namespace UnitTests
         }
 
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("  ")]
-        public void ContainerID_AssignedSomethingInvalid_ReturnsEmpty(String TestValue)
+        [Test]
+        public void FlashCardContainer_IsNotNullOnInstantiation()
         {
-            this._Settings.ContainerID = TestValue;
-            Assert.That(this._Settings.ContainerID, Is.Empty);
+            Assert.That(this._Settings.FlashCardContainer, Is.Not.Null, "Property should not have been null on instantiation");
         }
         [Test]
-        public void ContainerID_AssignedSomethingValid_ReturnsThatValue()
+        public void TopicContainer_IsNotNullOnInstantiation()
         {
-            this._Settings.ContainerID = "sometable";
-            Assert.That(this._Settings.ContainerID, Is.EqualTo("sometable"));
+            Assert.That(this._Settings.TopicContainer, Is.Not.Null, "Property should not have been null on instantiation");
         }
 
 
         [TestCase(null)]
         [TestCase("")]
         [TestCase("  ")]
-        public void ContainerPartitionKeyPath_AssignedSomethingInvalid_ReturnsEmpty(String TestValue)
+        public void PrimaryKey_AssignedSomethingInvalid_ReturnsEmpty(String TestValue)
         {
-            this._Settings.ContainerPartitionKeyPath = TestValue;
-            Assert.That(this._Settings.ContainerPartitionKeyPath, Is.Empty);
+            this._Settings.PrimaryKey = TestValue;
+            Assert.That(this._Settings.PrimaryKey, Is.Empty);
         }
         [Test]
-        public void ContainerPartitionKeyPath_AssignedSomethingValid_ReturnsThatValue()
+        public void PrimaryKey_AssignedSomethingValid_ReturnsThatValue()
         {
-            this._Settings.ContainerPartitionKeyPath = "/id";
-            Assert.That(this._Settings.ContainerPartitionKeyPath, Is.EqualTo("/id"));
+            this._Settings.PrimaryKey = "abc123";
+            Assert.That(this._Settings.PrimaryKey, Is.EqualTo("abc123"));
         }
+
 
     }
 }

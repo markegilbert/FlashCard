@@ -12,11 +12,9 @@ namespace DataImporter
 
         static async Task Main(string[] args)
         {
-            String PrimaryKey;
-            String PathToDataFile;
             Database CosmosDatabase;
             Container FlashCardContainer, TopicContainer;
-            CosmosDBSettings Settings;
+            DataImporterSettings Settings;
             String RawDataFileContents;
             int RecordCounter;
 
@@ -31,42 +29,35 @@ namespace DataImporter
             try
             {
                 #region Logging
-                ReportStatus("Reading in command line arguments...");
-                #endregion
-                PrimaryKey = args.ExtractValueFor("PrimaryKey", ValueIsRequired: true);
-                PathToDataFile = args.ExtractValueFor("PathToDataFile", ValueIsRequired: true);
-
-                #region Logging
-                ReportStatus("Loading up the config file settings...");
+                ReportStatus("Loading up the command line arguments and config file settings...");
                 #endregion
                 Settings = new ConfigurationBuilder()
+                    .AddCommandLine(args)
                     .AddJsonFile("appsettings.json")
                     .Build()
-                    .GetRequiredSection(CosmosDBSettings.SettingsName)
-                    .Get<CosmosDBSettings>()
-                    .ValidateDataAnnotations<CosmosDBSettings>();
-
+                    .Get<DataImporterSettings>()
+                    .ValidateDataAnnotations<DataImporterSettings>();
 
 
 
                 #region Logging
                 ReportStatus("Verifying database and container exist...");
                 #endregion
-                CosmosDatabase = await InitializeDatabase(Settings.AccountEndpoint, PrimaryKey, Settings.DatabaseName);
+                CosmosDatabase = await InitializeDatabase(Settings.CosmosDBSettings.AccountEndpoint, Settings.CosmosDBSettings.PrimaryKey, Settings.CosmosDBSettings.DatabaseName);
                 #region Logging
                 ReportStatus("Database was created and/or verified");
                 #endregion
-                FlashCardContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: Settings.ContainerID, partitionKeyPath: Settings.ContainerPartitionKeyPath);
-                TopicContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: "topic", partitionKeyPath: "/id");
+                FlashCardContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: Settings.CosmosDBSettings.FlashCardContainer.ContainerID, partitionKeyPath: Settings.CosmosDBSettings.FlashCardContainer.PartitionKeyPath);
+                TopicContainer = await CosmosDatabase.CreateContainerIfNotExistsAsync(id: Settings.CosmosDBSettings.TopicContainer.ContainerID, partitionKeyPath: Settings.CosmosDBSettings.TopicContainer.PartitionKeyPath);
                 #region Logging
                 ReportStatus("Container was created and/or verified");
                 #endregion
 
 
                 #region Logging
-                ReportStatus($"Loading data from {PathToDataFile}...");
+                ReportStatus($"Loading data from {Settings.PathToDataFile}...");
                 #endregion
-                RawDataFileContents = LoadDataFromFile(PathToDataFile);
+                RawDataFileContents = LoadDataFromFile(Settings.PathToDataFile);
                 dynamic FileContentsAsJson = JsonConvert.DeserializeObject(RawDataFileContents);
                 RecordCounter = 1;
                 foreach (JToken CurrentItem in FileContentsAsJson)

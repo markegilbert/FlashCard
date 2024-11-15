@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace FlashCard.Models
+﻿namespace FlashCard.Models
 {
     public class TopicModel
     {

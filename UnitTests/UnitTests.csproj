@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataImporter\DataImporter.csproj" />
+    <ProjectReference Include="..\FlashCard.Configuration\FlashCard.Configuration.csproj" />
   </ItemGroup>
 
 </Project>
