@@ -45,7 +45,12 @@ namespace FlashCard
                     serviceProvider.GetService<CosmosDBSettings>().DatabaseName,
                     serviceProvider.GetService<CosmosDBSettings>().TopicContainer.ContainerID);
             });
-            // TODO: Add another singleton for the FlashCardDBContext
+            builder.Services.AddSingleton<FlashCardDBContext>((serviceProvider) => {
+                return new FlashCardDBContext(serviceProvider.GetService<CosmosDBSettings>().AccountEndpoint,
+                    serviceProvider.GetService<CosmosDBSettings>().PrimaryKey,
+                    serviceProvider.GetService<CosmosDBSettings>().DatabaseName,
+                    serviceProvider.GetService<CosmosDBSettings>().TopicContainer.ContainerID);
+            });
 
             #region Logging
             _LogAs.Info("EF Contexts loaded");
