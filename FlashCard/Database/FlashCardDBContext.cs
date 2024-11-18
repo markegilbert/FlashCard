@@ -27,8 +27,6 @@ namespace FlashCard.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseCosmos(this._AccountEndpoint, this._AuthorizationKey, databaseName: this._DatabaseName);
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

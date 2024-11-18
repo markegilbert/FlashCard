@@ -51,6 +51,10 @@ namespace FlashCard
                     serviceProvider.GetService<CosmosDBSettings>().DatabaseName,
                     serviceProvider.GetService<CosmosDBSettings>().FlashCardContainer.ContainerID);
             });
+            builder.Services.AddTransient<FlashCardsRepository>((serviceProvider) =>
+            { 
+                return new FlashCardsRepository(serviceProvider.GetService<FlashCardDBContext>());
+            });
 
             #region Logging
             _LogAs.Info("EF Contexts loaded");
