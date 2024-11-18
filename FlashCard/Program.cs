@@ -49,7 +49,7 @@ namespace FlashCard
                 return new FlashCardDBContext(serviceProvider.GetService<CosmosDBSettings>().AccountEndpoint,
                     serviceProvider.GetService<CosmosDBSettings>().PrimaryKey,
                     serviceProvider.GetService<CosmosDBSettings>().DatabaseName,
-                    serviceProvider.GetService<CosmosDBSettings>().TopicContainer.ContainerID);
+                    serviceProvider.GetService<CosmosDBSettings>().FlashCardContainer.ContainerID);
             });
 
             #region Logging

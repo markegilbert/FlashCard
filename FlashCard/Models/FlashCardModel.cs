@@ -8,10 +8,7 @@ namespace FlashCard.Models
         public String Question { get; set; } = "";
         public String Answer { get; set; } = "";
         public TopicModel Topic { get; set; } = new TopicModel();
-
-        [JsonPropertyName("partitionKey")]
         public String PartitionKey { get; set; } = "";
-
-        public DateOnly CreatedOn { get; set; }
+        public DateOnly? CreatedOn { get; set; }
     }
 }
