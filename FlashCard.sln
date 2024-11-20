@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashCard.Configuration", "FlashCard.Configuration\FlashCard.Configuration.csproj", "{74325E97-F5DF-4C93-89EC-E63E2CA9A0E0}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "flashcard.ui", "FlashCard.UI\flashcard.ui.esproj", "{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{74325E97-F5DF-4C93-89EC-E63E2CA9A0E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74325E97-F5DF-4C93-89EC-E63E2CA9A0E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74325E97-F5DF-4C93-89EC-E63E2CA9A0E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F6B3D58-9675-4BB2-A2EE-4B64312BE991}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

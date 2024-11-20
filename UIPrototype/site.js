@@ -1,4 +1,4 @@
-// Original source: https://reintech.io/blog/implementing-infinite-scroll-bootstrap-5
+// Adapted from: https://reintech.io/blog/implementing-infinite-scroll-bootstrap-5
 function loadMoreContent(shouldIncludeLoadMoreButton) 
 {
     if (document.getElementById('LoadMoreButton')) { document.getElementById('LoadMoreButton').remove(); }
