@@ -3,12 +3,14 @@ using FlashCard.Configuration;
 using FlashCard.Database;
 using NLog.Extensions.Logging;
 using System.Reflection;
+using System.Security;
 
 namespace FlashCard
 {
     public class Program
     {
         private static NLog.ILogger? _LogAs;
+        private const String CORS_POLICY_NAME = "AllowAllOriginsPolicy";
 
 
         public static void Main(string[] args)
@@ -61,10 +63,20 @@ namespace FlashCard
             #endregion
 
 
-            // Add services to the DI container.
+            // Add logging services to the DI container.
             builder.Logging.ClearProviders();
             builder.Logging.AddNLog();
 
+            // Configure the CORS policy
+            // Source: https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-9.0
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: CORS_POLICY_NAME, 
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin();
+                                  });
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -81,6 +93,8 @@ namespace FlashCard
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(CORS_POLICY_NAME);
 
             app.UseAuthorization();
 

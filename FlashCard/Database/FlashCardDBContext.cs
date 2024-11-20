@@ -57,7 +57,6 @@ namespace FlashCard.Database
                 .Property(t => t.CreatedOn).ToJsonProperty("createdOn");
 
             // TODO: Get the Topic mapped.
-            // TODO: Get the Topic mapped.
         }
     }
 }
