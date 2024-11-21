@@ -1,4 +1,14 @@
 .flashCard {
     border: solid;
-    border-color: red;
+    border-color: black;
+}
+
+.flashCardQuestion {
+}
+
+.flashCardAnswer {
+}
+
+.flashCardHiddenSide {
+    display: none;
 }
