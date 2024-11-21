@@ -1,9 +1,16 @@
+.flashCardContainer {
+    margin-top: 1em;
+}
+
 .flashCard {
     border: solid;
     border-color: black;
+    padding: 1em;
+    margin-bottom: 1em;
 }
 
-.flashCardQuestion {
+.flashCardQuestionShowing {
+    background-color: lightblue;
 }
 
 .flashCardAnswer {
