@@ -6,35 +6,37 @@ const FlashCardList = () => {
 
     // Adapted from https://builtin.com/articles/react-infinite-scroll
     useEffect(() => {
-        const fetchFlashCards = async () => {
+        const fetchMoreFlashCards = async (numberOfCards) => {
             // TODO: This should come from the back-end
-            const response = await fetch("https://localhost:7006/api/FlashCards?TopicID=MovieQuestions&NumberOfFlashcards=3");
-            //const response = await fetch("https://localhost:7006/api/FlashCards?TopicID=MontyPythonQuestions&NumberOfFlashcards=3");
+            //const response = await fetch("https://localhost:7006/api/FlashCards?TopicID=MovieQuestions&NumberOfFlashcards=" + numberOfCards);
+            const response = await fetch("https://localhost:7006/api/FlashCards?TopicID=MontyPythonQuestions&NumberOfFlashcards=" + numberOfCards);
             const rawFlashCards = await response.json();
 
-            // Add the showQuestion property to the array elements, defaulted to true so that the question shows up by default
+            // Add the showQuestion property to the array elements, defaulted to true so that the new questions show up by default
             const enrichedFlashCards = rawFlashCards.map(obj => ({ ...obj, showQuestion: true }));
 
             // Combine the new array with the existing one, using the Javascript spread operators with both
             setFlashCards([...flashcards, ...enrichedFlashCards]);
         };
 
+        // TODO: These should come from the back-end
+        const loadInitialSet = async () => await fetchMoreFlashCards(10);
+        const loadMore = async () => await fetchMoreFlashCards(5);
+
         const handleScroll = () => {
             const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
             if (scrollTop + clientHeight >= scrollHeight - 20) {
-                fetchFlashCards();
+                loadMore();
             }
         };
 
         window.addEventListener("scroll", handleScroll);
-        window.addEventListener("load", handleScroll);
-        document.getElementById("AddMoreButton").addEventListener("click", handleScroll);
+        window.addEventListener("load", loadInitialSet);
 
         return () => {
             // This is the cleanup portion of the hook, and is used when the component is unmounted.
             window.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("load", handleScroll);
-            document.getElementById("AddMoreButton").removeEventListener("click", handleScroll);
+            window.removeEventListener("load", loadInitialSet);
         };
     }, [flashcards]);
 
@@ -61,7 +63,7 @@ const FlashCardList = () => {
                 ))}
             </div>
 
-            <button id="AddMoreButton">Add more</button>
+            <img src="./images/loading.gif" width="100px" />
         </>
     );
 
