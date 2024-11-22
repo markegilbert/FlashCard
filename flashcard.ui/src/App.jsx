@@ -10,6 +10,7 @@ function App() {
     return (
         <>
             <link href="/css/App.css" rel="stylesheet" />
+
             <ErrorBoundary fallback="<p>An error occurred loading the topics list.  Please check that the service is running.</p>">
                 <TopicSelection onSelectTopic={(topicSelected) => setTopicSelection(topicSelected)} />
             </ErrorBoundary>

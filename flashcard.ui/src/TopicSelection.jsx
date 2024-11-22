@@ -48,8 +48,6 @@ const TopicSelection = (props) => {
 
     return (
         <>
-            <link href="/css/App.css" rel="stylesheet" />
-
             <TopicSelector />
         </>
     );

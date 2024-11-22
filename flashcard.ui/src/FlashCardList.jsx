@@ -85,13 +85,15 @@ const FlashCardList = (props) => {
 
     const ShowSpinner = () => {
         if (hasServiceError) { return null; }
-        else { <img src="./images/loading.gif" width="100px" /> }
+        else { return <img src="./images/loading.gif" width="100px" />; }
     }
 
 
     return (
         <>
             <ShowError />
+
+            <link href="/css/FlashCard.css" rel="stylesheet" />
 
             <div id="FlashCardContainer" className="container flashCardContainer">
                 {flashcards.map((fc, index) => (
