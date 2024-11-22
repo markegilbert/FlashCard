@@ -79,7 +79,7 @@ const FlashCardList = (props) => {
     };
 
     const ShowError = () => {
-        if (hasServiceError) { return <p>An error occurred.  Please verify that the services are running.</p>; }
+        if (hasServiceError) { return <p>There was a problem retrieving the list of flashcards.  Please verify that the services are running.</p>; }
         else { return null; }
     }
 
