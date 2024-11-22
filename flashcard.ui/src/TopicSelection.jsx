@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-// TODO: The sticky-div class should be moved to a TopicSelection.css file
 
 
-const TopicSelection = () => {
+const TopicSelection = (props) => {
     const [topics, setTopics] = useState([]);
 
     useEffect(() => {
@@ -21,7 +20,7 @@ const TopicSelection = () => {
             <link href="/css/App.css" rel="stylesheet" />
 
             <div className="sticky-div">
-                <select id="TopicSelection">
+                <select id="TopicSelection" onChange={(e) => props.onSelectTopic(e.target.options[e.target.selectedIndex].id)}>
                     {topics.map(t => <option key={t.id} id={t.id}>{t.topicName}</option>)}
                 </select>
             </div>

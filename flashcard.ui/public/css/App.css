@@ -5,6 +5,7 @@
   text-align: center;
 }
 
+/* TODO: The sticky-div class should be moved to a TopicSelection.css file */
 /* Source: https://www.geeksforgeeks.org/how-to-make-a-div-stick-to-the-top-of-the-screen/ */
 .sticky-div {
     background-color: white;
