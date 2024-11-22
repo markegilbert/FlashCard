@@ -1,7 +1,7 @@
-﻿using FlashCard.Database;
+﻿using Microsoft.AspNetCore.Mvc;
+using FlashCard.Database;
 using FlashCard.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace FlashCard.Controllers
 {
@@ -15,7 +15,9 @@ namespace FlashCard.Controllers
 
         public FlashCardsController(ILogger<FlashCardsController> Logger, FlashCardsRepository Repository)
         {
-            // TODO: Validate these
+            if (Logger is null) {  throw new ArgumentNullException(nameof(Logger)); }
+            if (Repository is null) { throw new ArgumentNullException(nameof(Repository)); }
+
             this._Logger = Logger;
             this._Repository = Repository;
         }
@@ -23,8 +25,6 @@ namespace FlashCard.Controllers
         [HttpGet(Name = "GetFlashCards")]
         public async Task<IEnumerable<FlashCardModel>> Get([FromQuery] String TopicID, [FromQuery] int NumberOfFlashcards)
         {
-            List<FlashCardModel> Flashcards;
-
             #region Logging
             this._Logger.LogDebug("About to return the list of random flash cards");
             #endregion

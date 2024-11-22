@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using FlashCard.Models;
-using Microsoft.Azure.Cosmos;
-using System.ComponentModel;
 using FlashCard.Database;
+using FlashCard.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -18,7 +16,9 @@ namespace FlashCard.Controllers
 
         public TopicsController(ILogger<TopicsController> Logger, TopicDBContext Context) 
         {
-            // TODO: Validate these
+            if (Logger is null) { throw new ArgumentNullException(nameof(Logger)); }
+            if (Context is null) { throw new ArgumentNullException(nameof(Context)); }
+
             this._Logger = Logger;
             this._Context = Context;
         }
