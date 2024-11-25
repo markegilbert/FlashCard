@@ -3,7 +3,6 @@
 
 namespace DataImporter
 {
-    // TODO: This class needs unit tests
     public class DataImporterSettings
     {
         public String PathToDataFile { get; set; }

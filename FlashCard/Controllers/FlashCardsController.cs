@@ -28,7 +28,9 @@ namespace FlashCard.Controllers
             #region Logging
             this._Logger.LogDebug("About to return the list of random flash cards");
             #endregion
+            
 
+            // TODO: Log errors with this call
             return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards);
         }
     }

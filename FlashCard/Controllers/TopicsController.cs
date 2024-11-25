@@ -30,6 +30,7 @@ namespace FlashCard.Controllers
             this._Logger.LogDebug("About to return the list of available topics");
             #endregion
 
+            // TODO: Log errors with this call
             return await this._Context.Topics.ToListAsync();
         }
     }

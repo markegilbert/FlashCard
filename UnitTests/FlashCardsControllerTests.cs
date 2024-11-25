@@ -19,7 +19,7 @@ namespace UnitTests
         public void SetUp()
         {
             this._Logger = Substitute.For<ILogger<FlashCardsController>>();
-            this._Repository = Substitute.For<FlashCardsRepository>(new FlashCardDBContext("", "", "", ""));
+            this._Repository = Substitute.For<FlashCardsRepository>(new FlashCardDBContext("https://localhost", "abc123", "SomeDatabaseName", "SomeContainerName"));
 
             this._ArgumentNullException = null;
         }

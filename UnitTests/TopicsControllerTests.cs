@@ -19,7 +19,7 @@ namespace UnitTests
         public void SetUp()
         {
             this._Logger = Substitute.For<ILogger<TopicsController>>();
-            this._DBContext = Substitute.For<TopicDBContext>("", "", "", "");
+            this._DBContext = Substitute.For<TopicDBContext>("https://localhost", "abc123", "SomeDatabaseName", "SomeContainerName");
 
             this._ArgumentNullException = null;
         }

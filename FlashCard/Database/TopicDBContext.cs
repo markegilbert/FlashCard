@@ -3,28 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlashCard.Database
 {
-    public class TopicDBContext: DbContext
+    public class TopicDBContext: CosmosDbContextBase
     {
-        private String _AccountEndpoint;
-        private String _AuthorizationKey;
-        private String _DatabaseName;
-        private String _ContainerName;
-
         public DbSet<TopicModel> Topics { get; set; }
 
 
-        public TopicDBContext(String AccountEndpoint, String AuthorizationKey, String DatabaseName, String ContainerName)
-        {
-            // TODO: Validate these
-            this._AccountEndpoint = AccountEndpoint;
-            this._AuthorizationKey = AuthorizationKey;
-            this._DatabaseName = DatabaseName;
-            this._ContainerName = ContainerName;
-        }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseCosmos(this._AccountEndpoint, this._AuthorizationKey,databaseName: this._DatabaseName);
+        public TopicDBContext(String AccountEndpoint, String AuthorizationKey, String DatabaseName, String ContainerName) 
+            : base(AccountEndpoint, AuthorizationKey, DatabaseName, ContainerName) { }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

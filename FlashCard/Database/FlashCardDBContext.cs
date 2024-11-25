@@ -4,28 +4,14 @@ using Newtonsoft.Json;
 
 namespace FlashCard.Database
 {
-    public class FlashCardDBContext : DbContext
+    public class FlashCardDBContext : CosmosDbContextBase
     {
-        private String _AccountEndpoint;
-        private String _AuthorizationKey;
-        private String _DatabaseName;
-        private String _ContainerName;
-
         public DbSet<FlashCardModel> FlashCards { get; set; }
 
 
         public FlashCardDBContext(String AccountEndpoint, String AuthorizationKey, String DatabaseName, String ContainerName)
-        {
-            // TODO: Validate these
-            this._AccountEndpoint = AccountEndpoint;
-            this._AuthorizationKey = AuthorizationKey;
-            this._DatabaseName = DatabaseName;
-            this._ContainerName = ContainerName;
-        }
+            : base(AccountEndpoint, AuthorizationKey, DatabaseName, ContainerName) { }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseCosmos(this._AccountEndpoint, this._AuthorizationKey, databaseName: this._DatabaseName);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,7 +42,7 @@ namespace FlashCard.Database
             modelBuilder.Entity<FlashCardModel>()
                 .Property(t => t.CreatedOn).ToJsonProperty("createdOn");
 
-            // TODO: Get the Topic mapped.
+            // TODO: Get the Topic property mapped.
         }
     }
 }
