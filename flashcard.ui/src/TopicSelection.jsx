@@ -55,6 +55,7 @@ const TopicSelection = (props) => {
 
     return (
         <>
+            <link href="/css/TopicSelection.css" rel="stylesheet" />
             <TopicSelector />
         </>
     );
