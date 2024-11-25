@@ -6,5 +6,8 @@ export default defineConfig({
     plugins: [plugin()],
     server: {
         port: 59313,
+    },
+    define: {
+        "process.env": process.env
     }
 })

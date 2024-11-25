@@ -10,8 +10,7 @@ const TopicSelection = (props) => {
         const fetchTopics = async () => {
 
             try {
-                // TODO: This should come from the back-end
-                const response = await fetch("https://localhost:7006/api/Topics");
+                const response = await fetch(import.meta.env.VITE_SERVICE_BASE_URL + "/api/Topics");
                 const rawTopics = await response.json();
 
                 // TODO: Verify that rawTopics is an array
