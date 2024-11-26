@@ -8,7 +8,7 @@ const FlashCardList = (props) => {
     const fetchMoreFlashCards = async (shouldResetListFirst, numberOfCards) => {
 
         try {
-            const response = await fetch(import.meta.env.VITE_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
+            const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
             const rawFlashCards = await response.json();
 
             // If there is an error in the service response, rawFlashCards won't be an array, which means the .map() function will fail.  I have to check the type here.
