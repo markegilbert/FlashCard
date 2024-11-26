@@ -31,8 +31,6 @@ namespace FlashCard.Controllers
                 this._Logger.LogDebug("About to return the list of random flash cards");
                 #endregion
 
-                throw new Exception("This is another test");
-
                 return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards);
             }
             catch (Exception ex)
