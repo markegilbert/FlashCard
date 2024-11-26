@@ -26,12 +26,19 @@ namespace FlashCard.Controllers
         [HttpGet(Name = "GetTopics")]
         public async Task<IEnumerable<TopicModel>> Get()
         {
-            #region Logging
-            this._Logger.LogDebug("About to return the list of available topics");
-            #endregion
+            try
+            {
+                #region Logging
+                this._Logger.LogDebug("About to return the list of available topics");
+                #endregion
 
-            // TODO: Log errors with this call
-            return await this._Context.Topics.ToListAsync();
+                return await this._Context.Topics.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex.ToString());
+                throw;
+            }
         }
     }
 }

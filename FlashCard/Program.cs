@@ -26,7 +26,6 @@ namespace FlashCard
             #endregion
 
 
-            // TODO: Load up the context objects
             builder.Services.AddTransient<CosmosDBSettings>((serviceProvider) => {
                 return new ConfigurationBuilder()
                     .AddJsonFile("appsettings.json")

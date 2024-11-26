@@ -10,7 +10,8 @@ namespace FlashCard.Database
 
         public FlashCardsRepository(FlashCardDBContext Context)
         {
-            // TODO: Validate this
+            if (Context is null) {  throw new ArgumentNullException(nameof(Context)); }
+
             this._Context = Context;
         }
 

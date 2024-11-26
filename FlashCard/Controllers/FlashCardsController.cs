@@ -25,13 +25,22 @@ namespace FlashCard.Controllers
         [HttpGet(Name = "GetFlashCards")]
         public async Task<IEnumerable<FlashCardModel>> Get([FromQuery] String TopicID, [FromQuery] int NumberOfFlashcards)
         {
-            #region Logging
-            this._Logger.LogDebug("About to return the list of random flash cards");
-            #endregion
-            
+            try
+            {
+                #region Logging
+                this._Logger.LogDebug("About to return the list of random flash cards");
+                #endregion
 
-            // TODO: Log errors with this call
-            return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards);
+                throw new Exception("This is another test");
+
+                return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards);
+            }
+            catch (Exception ex)
+            {
+                this._Logger.LogError(ex.ToString());
+                throw;
+            }
+
         }
     }
 }
