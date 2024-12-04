@@ -11,6 +11,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    environment:
+      name: 'Prod'
+
     steps:
       - name: Checkout to the branch
         uses: actions/checkout@v2
