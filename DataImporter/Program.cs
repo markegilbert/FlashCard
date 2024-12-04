@@ -39,6 +39,9 @@ namespace DataImporter
                     .Get<DataImporterSettings>()
                     .ValidateDataAnnotations<DataImporterSettings>();
 
+                // Usage:
+                //      DataImport.exe --CosmosDBSettings:PrimaryKey {KeyFromAzure} --PathToDataFile {PathToJsonFileWithData}
+
 
 
                 #region Logging
@@ -102,7 +105,9 @@ namespace DataImporter
             Database CosmosDatabase;
 
             Server = new CosmosClient(accountEndpoint: AccountEndpoint, authKeyOrResourceToken: PrimaryKey);
-            CosmosDatabase = await Server.CreateDatabaseIfNotExistsAsync(id: DatabaseName, throughput: 400);
+            // In order to use a database account configured as "serverless", don't specify the "throughput" parameter at all. If you do, you get
+            // an error of "Shared throughput database creation is not supported for serverless accounts."
+            CosmosDatabase = await Server.CreateDatabaseIfNotExistsAsync(id: DatabaseName);
 
             return CosmosDatabase;
         }
