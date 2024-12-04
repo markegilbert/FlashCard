@@ -7,6 +7,12 @@ on:
   pull_request:
     branches: [ "prod" ]
 
+
+permissions:
+  id-token: write
+  contents: read
+
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
