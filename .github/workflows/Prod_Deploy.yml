@@ -35,7 +35,7 @@ jobs:
           appSourcePath: ${{ github.workspace }}
           dockerfilePath: Dockerfile
           registryUrl: flashcardscontainerappsregistry.azurecr.io
-          containerAppName: flashcards-api
-          resourceGroup: flashcard-rg
-          imageToBuild: flashcardscontainerappsregistry.azurecr.io/flashcards-api:${{ github.sha }}
+          containerAppName: flashcards-containerapps-app
+          resourceGroup: flashcards-rg
+          imageToBuild: flashcardscontainerappsregistry.azurecr.io/flashcards-containerapps-app:${{ github.sha }}
     
