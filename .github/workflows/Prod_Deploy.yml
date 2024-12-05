@@ -41,5 +41,7 @@ jobs:
           containerAppName: flashcards-containerapps-app
           resourceGroup: flashcards-rg
           imageToBuild: flashcardscontainerappsregistry.azurecr.io/flashcards-containerapps-app:${{ github.sha }}
-          azureCredentials: ${{ secrets.FLASHCARDAPI_AZURE_CREDENTIALS }}
+          registryUsername: ${{ secrets.FLASHCARDS_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.FLASHCARDS_REGISTRY_PASSWORD }}
+
     
