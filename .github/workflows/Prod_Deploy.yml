@@ -1,47 +1,44 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+name: Trigger auto deployment for flashcard-api
 
-name: Prod_Deploy
-
+# When this action will be executed
 on:
-  pull_request:
-    branches: [ "prod" ]
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ prod ]
+    paths:
+    - '**'
+    - '.github/workflows/flashcard-api-AutoDeployTrigger-2e371e9e-a25b-4139-a332-d12992774620.yml'
 
-
-permissions:
-  id-token: write
-  contents: read
-
-
+  # Allow manual trigger 
+  workflow_dispatch:
+      
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    environment:
-      name: 'Prod'
 
     steps:
       - name: Checkout to the branch
         uses: actions/checkout@v2
 
-      - name: Azure CLI Login
-        uses: azure/login@v2
+      - name: Azure Login
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.FLASHCARDAPI_AZURE_CREDENTIALS }}
-         
+
       - run: |
           echo ${{ github.workspace }}
 
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}
+          appSourcePath: ${{ github.workspace }}/FlashCard
           dockerfilePath: ./FlashCard/Dockerfile
-          registryUrl: flashcardscontainerappsregistry.azurecr.io
-          containerAppName: flashcards-containerapps-app
-          resourceGroup: flashcards-rg
-          imageToBuild: flashcardscontainerappsregistry.azurecr.io/flashcards-containerapps-app:${{ github.sha }}
-          registryUsername: ${{ secrets.FLASHCARDS_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.FLASHCARDS_REGISTRY_PASSWORD }}
-
-    
+          registryUrl: ca46344a96b9acr.azurecr.io
+          registryUsername: ${{ secrets.FLASHCARDAPI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.FLASHCARDAPI_REGISTRY_PASSWORD }}
+          containerAppName: flashcard-api
+          resourceGroup: flashcard-rg
+          imageToBuild: ca46344a96b9acr.azurecr.io/flashcard-api:${{ github.sha }}
+          
+            
