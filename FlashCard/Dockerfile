@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-noble AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["FlashCard.csproj", "."]
-COPY ["../FlashCard.Configuration/FlashCard.Configuration.csproj", "."]
+COPY ["../FlashCard.Configuration/FlashCard.Configuration.csproj", "./FlashCard.Configuration"]
 RUN dotnet restore "FlashCard.Configuration.csproj"
 RUN dotnet restore "FlashCard.csproj"
 COPY . .
