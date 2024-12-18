@@ -8,7 +8,7 @@ on:
       [ prod ]
     paths:
     - '**'
-    - '.github/workflows/flashcard-api-AutoDeployTrigger-2e371e9e-a25b-4139-a332-d12992774620.yml'
+    - '.github/workflows/Prod_Deploy.yml'
 
   # Allow manual trigger 
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}/FlashCard
+          appSourcePath: ${{ github.workspace }}
           dockerfilePath: ./Dockerfile
           registryUrl: ca46344a96b9acr.azurecr.io
           registryUsername: ${{ secrets.FLASHCARDAPI_REGISTRY_USERNAME }}
