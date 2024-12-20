@@ -13,8 +13,8 @@ COPY ["FlashCard/FlashCard.csproj", "FlashCard/"]
 COPY ["FlashCard.Configuration/FlashCard.Configuration.csproj", "FlashCard.Configuration/"]
 WORKDIR /src/FlashCard
 RUN dotnet restore "FlashCard.csproj"
-COPY ["FlashCard/*", "FlashCard/"]
-COPY ["FlashCard.Configuration/*", "FlashCard.Configuration/"]
+COPY ["FlashCard", "FlashCard/"]
+COPY ["FlashCard.Configuration", "FlashCard.Configuration/"]
 WORKDIR "/src/FlashCard"
 RUN dotnet build "./FlashCard.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
