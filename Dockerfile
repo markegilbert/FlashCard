@@ -11,11 +11,10 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["FlashCard/FlashCard.csproj", "FlashCard/"]
 COPY ["FlashCard.Configuration/FlashCard.Configuration.csproj", "FlashCard.Configuration/"]
-WORKDIR /FlashCard.Configuration
-#RUN dotnet restore "FlashCard.Configuration.csproj"
 WORKDIR /src/FlashCard
 RUN dotnet restore "FlashCard.csproj"
-COPY . .
+COPY ["FlashCard/*", "FlashCard/"]
+COPY ["FlashCard.Configuration/*", "FlashCard.Configuration/"]
 WORKDIR "/src/FlashCard"
 RUN dotnet build "./FlashCard.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
