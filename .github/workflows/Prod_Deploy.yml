@@ -29,6 +29,15 @@ jobs:
       - run: |
           echo ${{ github.workspace }}
 
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: './appsettings.json'
+        env:
+          CosmosDBSettings.AccountEndpoint: ${{ secrets.COSMOSDBSETTINGS_ACCOUNTENDPOINT }}
+          CosmosDBSettings.DatabaseName: ${{ secrets.COSMOSDBSETTINGS_DATABASENAME }}
+
+
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
