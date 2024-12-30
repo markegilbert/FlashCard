@@ -32,7 +32,7 @@ jobs:
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: './appsettings.json'
+          files: './FlashCard/appsettings.json'
         env:
           CosmosDBSettings.AccountEndpoint: ${{ secrets.COSMOSDBSETTINGS_ACCOUNTENDPOINT }}
           CosmosDBSettings.DatabaseName: ${{ secrets.COSMOSDBSETTINGS_DATABASENAME }}
