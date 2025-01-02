@@ -89,9 +89,8 @@ namespace FlashCard
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseHttpsRedirection();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseCors(CORS_POLICY_NAME);
 
