@@ -21,6 +21,10 @@ namespace FlashCard.Controllers
 
             this._Logger = Logger;
             this._Context = Context;
+
+            #region Logging
+            this._Logger.LogInformation("TopicsController instantiated");
+            #endregion
         }
 
         [HttpGet(Name = "GetTopics")]
