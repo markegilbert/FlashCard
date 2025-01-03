@@ -141,6 +141,7 @@ namespace FlashCard
             {
                 #region Logging
                 _LogAs.Error(ex);
+                _LogAs.Error(ex.StackTrace);
                 #endregion
 
                 throw;
