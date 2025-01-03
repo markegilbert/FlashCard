@@ -129,11 +129,23 @@ namespace FlashCard
             _LogAs.Info("Controllers were mapped");
             #endregion
 
-            app.Run();
+            try
+            {
+                app.Run();
 
-            #region Logging
-            _LogAs.Info("app.Run() was just invoked");
-            #endregion
+                #region Logging
+                _LogAs.Info("app.Run() was just invoked");
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                #region Logging
+                _LogAs.Error(ex);
+                #endregion
+
+                throw;
+            }
+
         }
     }
 }
