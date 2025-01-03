@@ -66,6 +66,10 @@ namespace FlashCard
             builder.Logging.ClearProviders();
             builder.Logging.AddNLog();
 
+            #region Logging
+            _LogAs.Info("Logging added to the DI container");
+            #endregion
+
             // Configure the CORS policy
             // Source: https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-9.0
             builder.Services.AddCors(options =>
@@ -77,10 +81,20 @@ namespace FlashCard
                                   });
             });
 
+            #region Logging
+            _LogAs.Info("CORS policy added");
+            #endregion
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            #region Logging
+            _LogAs.Info("Endpoints added");
+            #endregion
+
 
             var app = builder.Build();
 
@@ -92,12 +106,33 @@ namespace FlashCard
                 app.UseHttpsRedirection();
             }
 
+            #region Logging
+            _LogAs.Info("HTTP request pipeline configured");
+            #endregion
+
+
             app.UseCors(CORS_POLICY_NAME);
+
+            #region Logging
+            _LogAs.Info("CORS policy configured");
+            #endregion
 
             app.UseAuthorization();
 
+            #region Logging
+            _LogAs.Info("Authorization capabilities configured");
+            #endregion
 
             app.MapControllers();
+
+            #region Logging
+            _LogAs.Info("Controllers were mapped");
+            #endregion
+
+            #region Logging
+            _LogAs.Info("About to run the app");
+            #endregion
+
 
             app.Run();
         }

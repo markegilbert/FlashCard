@@ -20,6 +20,10 @@ namespace FlashCard.Controllers
 
             this._Logger = Logger;
             this._Repository = Repository;
+
+            #region Logging
+            this._Logger.LogInformation("FlashCardsController instantiated");
+            #endregion
         }
 
         [HttpGet(Name = "GetFlashCards")]
