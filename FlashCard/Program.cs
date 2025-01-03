@@ -140,8 +140,11 @@ namespace FlashCard
             catch (Exception ex)
             {
                 #region Logging
-                _LogAs.Error(ex);
+                _LogAs.Error("\t**************");
+                _LogAs.Error("\tError running the app");
+                _LogAs.Error(ex.Message);
                 _LogAs.Error(ex.StackTrace);
+                _LogAs.Error("\t**************");
                 #endregion
 
                 throw;
