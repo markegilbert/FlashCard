@@ -131,6 +131,10 @@ namespace FlashCard
 
             try
             {
+                #region Logging
+                _LogAs.Info("app.Run() is about to be invoked");
+                #endregion
+
                 app.Run();
 
                 #region Logging
