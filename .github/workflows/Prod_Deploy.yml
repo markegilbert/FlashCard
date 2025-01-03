@@ -15,7 +15,7 @@ on:
       
 jobs:
   build-and-deploy:
-    environment: prod
+    environment: Prod
     
     runs-on: ubuntu-latest
 
