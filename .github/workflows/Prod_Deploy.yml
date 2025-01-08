@@ -38,7 +38,7 @@ jobs:
         env:
           CosmosDBSettings.AccountEndpoint: ${{ secrets.COSMOSDBSETTINGS_ACCOUNTENDPOINT }}
           CosmosDBSettings.DatabaseName: ${{ secrets.COSMOSDBSETTINGS_DATABASENAME }}
-
+          CosmosDBSettings.PrimaryKey: ${{ secrets.COSMOSDBSETTINGS_PRIMARYKEY }}
 
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
