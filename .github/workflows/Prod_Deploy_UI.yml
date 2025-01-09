@@ -33,11 +33,8 @@ jobs:
 
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
-        with:
-          files: './flashcard.ui/.env'
-        env:
-          FLASHCARD_SERVICE_BASE_URL: ${{ secrets.FLASHCARD_SERVICE_BASE_URL }}
-
+        run: sed -i "s/FLASHCARD_SERVICE_BASE_URL=.*/FLASHCARD_SERVICE_BASE_URL=${{ secrets.FLASHCARD_SERVICE_BASE_URL }}/" './flashcard.ui/.env'
+      
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
