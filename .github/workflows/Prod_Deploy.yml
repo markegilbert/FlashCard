@@ -1,4 +1,4 @@
-name: Trigger auto deployment for flashcard-api
+name: FlashCard API deployment
 
 # When this action will be executed
 on:

@@ -34,7 +34,7 @@ jobs:
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
-          files: './flashcard-ui/.env'
+          files: './flashcard.ui/.env'
         env:
           FLASHCARD_SERVICE_BASE_URL: ${{ secrets.FLASHCARD_SERVICE_BASE_URL }}
 
