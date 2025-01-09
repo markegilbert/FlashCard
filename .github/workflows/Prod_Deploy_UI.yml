@@ -32,7 +32,6 @@ jobs:
           echo ${{ github.workspace }}
 
       - name: App Settings Variable Substitution
-        uses: microsoft/variable-substitution@v1
         run: sed -i "s/FLASHCARD_SERVICE_BASE_URL=.*/FLASHCARD_SERVICE_BASE_URL=${{ secrets.FLASHCARD_SERVICE_BASE_URL }}/" './flashcard.ui/.env'
       
       - name: Build and push container image to registry
