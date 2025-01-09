@@ -1,0 +1,53 @@
+name: FlashCard UI deployment
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ prod ]
+    paths:
+    - '**'
+    - '.github/workflows/Prod_Deploy_UI.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    environment: Prod
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.FLASHCARDAPI_AZURE_CREDENTIALS }}
+
+      - run: |
+          echo ${{ github.workspace }}
+
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: './flashcard-ui/.env'
+        env:
+          FLASHCARD_SERVICE_BASE_URL: ${{ secrets.FLASHCARD_SERVICE_BASE_URL }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          dockerfilePath: ./DockerfileUI
+          registryUrl: ca46344a96b9acr.azurecr.io
+          registryUsername: ${{ secrets.FLASHCARDAPI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.FLASHCARDAPI_REGISTRY_PASSWORD }}
+          containerAppName: flashcard-ui
+          resourceGroup: flashcard-rg
+          imageToBuild: ca46344a96b9acr.azurecr.io/flashcard-ui:${{ github.sha }}
+          
+            
