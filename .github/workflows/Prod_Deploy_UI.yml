@@ -32,7 +32,7 @@ jobs:
           echo ${{ github.workspace }}
 
       - name: App Settings Variable Substitution
-        run: sed -i "s/FLASHCARD_SERVICE_BASE_URL=.*/FLASHCARD_SERVICE_BASE_URL=${{ secrets.FLASHCARD_SERVICE_BASE_URL }}/" './flashcard.ui/.env'
+        run: sed -i 's/FLASHCARD_SERVICE_BASE_URL=.*/FLASHCARD_SERVICE_BASE_URL=${{ secrets.FLASHCARD_SERVICE_BASE_URL }}/' './flashcard.ui/.env'
       
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
