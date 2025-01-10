@@ -7,6 +7,7 @@ FROM node:18-alpine
 WORKDIR /app
  
 # Copy package.json and package-lock.json
+COPY package.json ./app
 COPY package*.json ./app
  
 # Install dependencies
