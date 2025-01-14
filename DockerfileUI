@@ -17,7 +17,7 @@ RUN npm install
 COPY ./flashcard.ui .
  
 # Expose the port your app runs on
-EXPOSE 80
+EXPOSE 59313
  
 # Define the command to run your app
 CMD [ "npm", "run", "dev"]
