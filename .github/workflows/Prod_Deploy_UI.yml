@@ -35,7 +35,7 @@ jobs:
         run: sed -i -e 's|FLASHCARD_SERVICE_BASE_URL=.*|FLASHCARD_SERVICE_BASE_URL=${{ secrets.FLASHCARD_SERVICE_BASE_URL }}|' './flashcard.ui/.env'
 
       - name: Vite Port Update
-        run: sed -i -e 's|port:.*,|port:8080,' './flashcard.ui/vite.config.js'
+        run: sed -i -e 's|port:.*,|port:8080,|' './flashcard.ui/vite.config.js'
       
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
