@@ -4,7 +4,7 @@
 FROM node:18-alpine
  
 # Set the working directory inside the container
-#WORKDIR /app
+WORKDIR /app
  
 # Copy package.json and package-lock.json
 COPY ./flashcard.ui/package.json .
@@ -14,10 +14,10 @@ COPY ./flashcard.ui/package*.json .
 RUN npm install
  
 # Copy the rest of your application files
-COPY ./flashcard.ui .
+COPY flashcard.ui .
  
 # Expose the port your app runs on
-EXPOSE 8080
+EXPOSE 59313
  
 # Define the command to run your app
-CMD [ "npm", "run", "build"]
+CMD [ "npm", "run", "host"]
