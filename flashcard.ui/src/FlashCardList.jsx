@@ -82,9 +82,14 @@ const FlashCardList = (props) => {
         else { return null; }
     }
 
-    const ShowSpinner = () => {
+    //const ShowSpinner = () => {
+    //    if (hasServiceError) { return null; }
+    //    else { return <img src="./images/loading.gif" width="100px" />; }
+    //}
+
+    const ShowLoadMoreButton = () => {
         if (hasServiceError) { return null; }
-        else { return <img src="./images/loading.gif" width="100px" />; }
+        else { return <button className="loadMoreControl" onClick={loadMoreForThisTopic}>Load More</button>; }
     }
 
 
@@ -103,7 +108,7 @@ const FlashCardList = (props) => {
                 ))}
             </div>
 
-            <ShowSpinner />
+            <ShowLoadMoreButton />
         </>
     )
 
