@@ -6,6 +6,13 @@ const TopicSelection = (props) => {
     const [hasServiceError, setHasServiceError] = useState(false);
     const [topicID, setTopicID] = useState("");
 
+
+    const updateSelectedTopicProp = (selectedTopicID) => {
+        props.onSelectTopic(selectedTopicID);
+        setTopicID(selectedTopicID);
+    };
+
+
     useEffect(() => {
         const fetchTopics = async () => {
 
@@ -17,6 +24,11 @@ const TopicSelection = (props) => {
                 setTopics(rawTopics);
 
                 setHasServiceError(false);
+
+                // Default the list to the first topic
+                if (rawTopics && rawTopics.length > 0) {
+                    updateSelectedTopicProp(rawTopics[0].id);
+                }
             }
             catch (ex) {
                 // TODO: Log the error
@@ -29,8 +41,7 @@ const TopicSelection = (props) => {
 
 
     const handleChange = (selectedID) => {
-        props.onSelectTopic(selectedID);
-        setTopicID(selectedID);
+        updateSelectedTopicProp(selectedID);
     };
 
 
