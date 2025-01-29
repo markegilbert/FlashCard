@@ -5,11 +5,12 @@ This application presents a series of flashcards to the user.  Each flashcard ha
 For a quick walkthrough of the user experience, please see: https://youtu.be/RanuGF-EJ1o
 
 ## Technologies used for this application:
-- Cosmos DB
-- Entity Framework
-- .NET 8, Web API
 - React
+- .NET 8, Web API
+- Entity Framework
+- Cosmos DB
 - Azure Container Apps
+- GitHub Actions
 
 ## Solution Architecture
 - flashcard.ui: 
