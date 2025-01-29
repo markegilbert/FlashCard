@@ -56,7 +56,6 @@ const FlashCardList = (props) => {
 
         const handleScroll = () => {
             const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-            console.log("handleScroll: scrollTop=" + scrollTop + "; clientHeight=" + clientHeight + "; scrollHeight=" + scrollHeight);
             if (scrollTop + clientHeight >= scrollHeight - 100) {
                 loadMoreForThisTopic();
             }
