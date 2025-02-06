@@ -10,6 +10,7 @@ For a quick walkthrough of the user experience, please see: https://youtu.be/Ran
 - Entity Framework
 - Cosmos DB
 - Azure Container Apps
+- Linux containers
 - Docker
 - GitHub Actions
 
