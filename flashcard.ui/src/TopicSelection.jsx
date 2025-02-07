@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import LoadingStatus from "../Helpers/LoadingStatus";
+import LoadingIndicator from "./LoadingIndicator";
 
 
 const TopicSelection = (props) => {
     const [topics, setTopics] = useState([]);
-    const [hasServiceError, setHasServiceError] = useState(false);
     const [topicID, setTopicID] = useState("");
+    const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
 
 
     const updateSelectedTopicProp = (selectedTopicID) => {
@@ -17,22 +19,24 @@ const TopicSelection = (props) => {
         const fetchTopics = async () => {
 
             try {
+                setLoadingState(LoadingStatus.isLoading);
+
                 const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/Topics");
                 const rawTopics = await response.json();
 
                 // TODO: Verify that rawTopics is an array
                 setTopics(rawTopics);
 
-                setHasServiceError(false);
-
                 // Default the list to the first topic
                 if (rawTopics && rawTopics.length > 0) {
                     updateSelectedTopicProp(rawTopics[0].id);
                 }
+
+                setLoadingState(LoadingStatus.loaded);
             }
             catch (ex) {
                 // TODO: Log the error
-                setHasServiceError(true);
+                setLoadingState(LoadingStatus.hasError);
             }
         }
 
@@ -46,12 +50,8 @@ const TopicSelection = (props) => {
 
 
     const TopicSelector = () => {
-        if (hasServiceError) {
-            return <p>There was a problem loading the list of available topics.  Please verify that the services are running.</p>;
-        }
-        else if (topics.length == 0) {
-            return null;
-        }
+
+        if (topics.length == 0) { return null; }
         else {
             return (
                 <div className="sticky-div">
@@ -66,6 +66,7 @@ const TopicSelection = (props) => {
     return (
         <>
             <link href="/css/TopicSelection.css" rel="stylesheet" />
+            <LoadingIndicator loadingState={loadingState} hasErrorMessage="There was a problem loading the list of available topics.  Please verify that the services are running." />
             <TopicSelector />
         </>
     );
