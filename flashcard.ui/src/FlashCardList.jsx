@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
+import LoadingStatus from "../Helpers/LoadingStatus";
+import LoadingIndicator from "./LoadingIndicator";
+
 
 const FlashCardList = (props) => {
     const [flashcards, setFlashCards] = useState([]);
-    const [hasServiceError, setHasServiceError] = useState(false);
+    const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
 
 
     const fetchMoreFlashCards = async (shouldResetListFirst, numberOfCards) => {
 
         try {
+            setLoadingState(LoadingStatus.isLoading);
+
             const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
             const rawFlashCards = await response.json();
 
@@ -28,13 +33,14 @@ const FlashCardList = (props) => {
                 // because everything is done here, once.
                 if (shouldResetListFirst) { setFlashCards(enrichedFlashCards); }
                 else { setFlashCards([...flashcards, ...enrichedFlashCards]); }
+
+                setLoadingState(LoadingStatus.loaded);
             }
 
-            setHasServiceError(false);
         }
         catch (ex) {
             // TODO: Log the error
-            setHasServiceError(true);
+            setLoadingState(LoadingStatus.hasError);
         }
 
     };
@@ -77,23 +83,17 @@ const FlashCardList = (props) => {
         setFlashCards(updatedFlashCardList);
     };
 
-    const ShowError = () => {
-        if (hasServiceError) { return <p>There was a problem retrieving the list of flashcards.  Please verify that the services are running.</p>; }
-        else { return null; }
-    }
-
     const ShowLoadMoreButton = () => {
-        if (hasServiceError) { return null; }
+        if (loadingState != LoadingStatus.loaded || flashcards.length == 0) { return null; }
         else { return <button className="loadMoreControl" onClick={loadMoreForThisTopic}>Load More</button>; }
     }
 
+    const FlashCardList = () => {
+        if (loadingState != LoadingStatus.loaded) { return null; }
 
-    return (
-        <>
-            <ShowError />
+        if (flashcards.length == 0) { return <p>No flashcards have been defined for this topic yet</p>; }
 
-            <link href="/css/FlashCard.css" rel="stylesheet" />
-
+        return (
             <div id="FlashCardContainer" className="container flashCardContainer">
                 {flashcards.map((fc, index) => (
                     <div className={fc.showQuestion ? 'flashCard flashCardQuestionShowing' : 'flashCard'} key={index} id={index} onClick={() => ToggleFlashCardSideVisibility({ index })}>
@@ -102,7 +102,15 @@ const FlashCardList = (props) => {
                     </div>
                 ))}
             </div>
+        );
+    }
 
+
+    return (
+        <>
+            <link href="/css/FlashCard.css" rel="stylesheet" />
+            <LoadingIndicator loadingState={loadingState} hasErrorMessage="There was a problem retrieving the list of flashcards.  Please verify that the services are running." />
+            <FlashCardList />
             <ShowLoadMoreButton />
         </>
     )
