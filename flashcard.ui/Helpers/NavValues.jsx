@@ -1,7 +1,6 @@
 const navValues = {
 	study: "Study",
-	addFlashcard: "Add",
-	deleteFlashcard: "Delete"
+	manage: "Manage"
 };
 
 export default navValues;

@@ -12,27 +12,27 @@ const Navbar = () => {
 	switch (currentNavLocation) {
 		case navValues.study:
 			return (
-				<div>
-					<span>Study</span>
-					<button onClick={() => navigate(navValues.addFlashcard)}>Add</button>
-					<button onClick={() => navigate(navValues.deleteFlashcard)}>Delete</button>
-				</div>
+				<>
+					<link href="/css/Navbar.css" rel="stylesheet" />
+					<div className="navbar">
+						<ul>
+							<li><div>Study</div></li>
+							<li><a href="#" onClick={() => navigate(navValues.manage)}>Manage</a></li>
+						</ul>
+					</div>
+				</>
 			);
-		case navValues.addFlashcard:
+		case navValues.manage:
 			return (
-				<div>
-					<button onClick={() => navigate(navValues.study)}>Study</button>
-					<span>Add</span>
-					<button onClick={() => navigate(navValues.deleteFlashcard)}>Delete</button>
-				</div>
-			);
-		case navValues.deleteFlashcard:
-			return (
-				<div>
-					<button onClick={() => navigate(navValues.study)}>Study</button>
-					<button onClick={() => navigate(navValues.addFlashcard)}>Add</button>
-					<span>Delete</span>
-				</div>
+				<>
+					<link href="/css/Navbar.css" rel="stylesheet" />
+					<div className="navbar">
+						<ul>
+							<li><a href="#" onClick={() => navigate(navValues.study)}>Study</a></li>
+							<li><div>Manage</div></li>
+						</ul>
+					</div>
+				</>
 			);
 		default:
 			return (
