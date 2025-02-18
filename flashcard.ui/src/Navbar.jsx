@@ -1,13 +1,13 @@
 import navValues from "../helpers/NavValues";
 import { useContext } from "react";
-import NavigationContext from "../Helpers/NavigationContext";
+import FlashCardContext from "../Helpers/FlashCardContext";
 // TODO: Add the imports for addFlashCard and deleteFlashCard
 
 
 const Navbar = () => {
 
-	// Destructure the navigate function out of the context object
-	const { currentNavLocation, navigate } = useContext(NavigationContext);
+	// Destructure only the properties from FlashCardContext that I need in this component
+	const { currentNavLocation, currentTopicId, navigate } = useContext(FlashCardContext);
 
 	switch (currentNavLocation) {
 		case navValues.study:
@@ -17,7 +17,7 @@ const Navbar = () => {
 					<div className="navbar">
 						<ul>
 							<li><div>Study</div></li>
-							<li><a href="#" onClick={() => navigate(navValues.manage)}>Manage</a></li>
+							<li><a href="#" onClick={() => navigate(navValues.manage, currentTopicId)}>Manage</a></li>
 						</ul>
 					</div>
 				</>
@@ -28,7 +28,7 @@ const Navbar = () => {
 					<link href="/css/Navbar.css" rel="stylesheet" />
 					<div className="navbar">
 						<ul>
-							<li><a href="#" onClick={() => navigate(navValues.study)}>Study</a></li>
+							<li><a href="#" onClick={() => navigate(navValues.study, currentTopicId)}>Study</a></li>
 							<li><div>Manage</div></li>
 						</ul>
 					</div>

@@ -1,19 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import LoadingStatus from "../Helpers/LoadingStatus";
 import LoadingIndicator from "./LoadingIndicator";
+import FlashCardContext from "../Helpers/FlashCardContext";
 
 
 const FlashCardList = (props) => {
     const [flashcards, setFlashCards] = useState([]);
     const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
 
+    // TODO: Document this
+    const { currentNavLocation, currentTopicId, navigate } = useContext(FlashCardContext);
 
     const fetchMoreFlashCards = async (shouldResetListFirst, numberOfCards) => {
 
         try {
             setLoadingState(LoadingStatus.isLoading);
 
-            const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
+            //const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
+            const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + currentTopicId + "&NumberOfFlashcards=" + numberOfCards);
+
             const rawFlashCards = await response.json();
 
             // If there is an error in the service response, rawFlashCards won't be an array, which means the .map() function will fail.  I have to check the type here.

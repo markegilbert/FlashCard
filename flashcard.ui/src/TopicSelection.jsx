@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import LoadingStatus from "../Helpers/LoadingStatus";
 import LoadingIndicator from "./LoadingIndicator";
+import FlashCardContext from "../Helpers/FlashCardContext";
 
 
-const TopicSelection = (props) => {
+const TopicSelection = () => {
     const [topics, setTopics] = useState([]);
     const [topicID, setTopicID] = useState("");
     const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
 
 
-    const updateSelectedTopicProp = (selectedTopicID) => {
-        props.onSelectTopic(selectedTopicID);
+    // Destructure only the properties from FlashCardContext that I need in this component
+    const { currentNavLocation, navigate } = useContext(FlashCardContext);
+
+
+    const updateSelectedTopic = (selectedTopicID) => {
         setTopicID(selectedTopicID);
+        navigate(currentNavLocation, selectedTopicID);
     };
 
 
@@ -29,7 +34,7 @@ const TopicSelection = (props) => {
 
                 // Default the list to the first topic
                 if (rawTopics && rawTopics.length > 0) {
-                    updateSelectedTopicProp(rawTopics[0].id);
+                    updateSelectedTopic(rawTopics[0].id);
                 }
 
                 setLoadingState(LoadingStatus.loaded);
@@ -45,7 +50,7 @@ const TopicSelection = (props) => {
 
 
     const handleChange = (selectedID) => {
-        updateSelectedTopicProp(selectedID);
+        updateSelectedTopic(selectedID);
     };
 
 
