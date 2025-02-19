@@ -2,7 +2,7 @@ import { useContext } from "react";
 import navValues from "../helpers/NavValues";
 import FlashCardContext from "../Helpers/FlashCardContext";
 import FlashCardList from "./FlashCardList"
-//import ManageFlashCardList from "./ManageFlashCardList";
+import ManageFlashCardList from "./ManageFlashCardList";
 
 
 const ViewSelector = () => {
@@ -19,8 +19,7 @@ const ViewSelector = () => {
 		case navValues.manage:
 			return (
 				// The selected topic is passed to ManageFlashCardList via a prop
-				//<ManageFlashCardList topicID={currentTopicId} />
-				<h3>ManageFlashCardList for topic {currentTopicId}</h3>
+				<ManageFlashCardList topicID={currentTopicId} />
 			);
 		default:
 			return (
