@@ -31,14 +31,10 @@ namespace FlashCard.Controllers
         {
             try
             {
-                // TODO: Modify the logging statement
                 #region Logging
-                this._Logger.LogDebug("About to return the list of random flash cards");
+                this._Logger.LogDebug($"About to return the list of {NumberOfFlashcards} flash cards for topic '{TopicID}', {(String.IsNullOrEmpty(OrderBy) ? "randomized" : "ordered by " + OrderBy)}");
                 #endregion
 
-                // TODO: Would this switch be better handled in the repository?  Or the fact that I'm deciding between a random list and a
-                //       list by specific field(s) be decided here in the controller?
-                if (String.IsNullOrEmpty(OrderBy)) { return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards); }
                 return await this._Repository.GetFlashCardsByTopic(TopicID, NumberOfFlashcards, OrderBy);
             }
             catch (Exception ex)
