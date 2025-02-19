@@ -57,8 +57,11 @@ const ManageFlashCardList = (props) =>
             <div id="FlashCardContainer">
                 {flashcards.map((fc, index) => (
                     <div className="flashCardManagementContainer" key={index} id={index}>
-                        <div><strong>Q:</strong> {fc.question}</div>
-                        <div><strong>A:</strong> {fc.answer}</div>
+                        <div className="flashCardQAndA">
+                            <div><strong>Q:</strong> {fc.question}</div>
+                            <div><strong>A:</strong> {fc.answer}</div>
+                        </div>
+                        <div className="deleteButton"><img src="/images/bin.png" width="25px" /></div>
                     </div>
                 ))}
             </div>
