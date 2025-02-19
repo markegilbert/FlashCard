@@ -27,15 +27,19 @@ namespace FlashCard.Controllers
         }
 
         [HttpGet(Name = "GetFlashCards")]
-        public async Task<IEnumerable<FlashCardModel>> Get([FromQuery] String TopicID, [FromQuery] int NumberOfFlashcards)
+        public async Task<IEnumerable<FlashCardModel>> Get([FromQuery] String TopicID, [FromQuery] int NumberOfFlashcards, [FromQuery] String? OrderBy)
         {
             try
             {
+                // TODO: Modify the logging statement
                 #region Logging
                 this._Logger.LogDebug("About to return the list of random flash cards");
                 #endregion
 
-                return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards);
+                // TODO: Would this switch be better handled in the repository?  Or the fact that I'm deciding between a random list and a
+                //       list by specific field(s) be decided here in the controller?
+                if (String.IsNullOrEmpty(OrderBy)) { return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards); }
+                return await this._Repository.GetFlashCardsByTopic(TopicID, NumberOfFlashcards, OrderBy);
             }
             catch (Exception ex)
             {

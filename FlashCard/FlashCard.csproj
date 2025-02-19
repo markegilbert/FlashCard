@@ -30,4 +30,8 @@
     <ProjectReference Include="..\FlashCard.Configuration\FlashCard.Configuration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
