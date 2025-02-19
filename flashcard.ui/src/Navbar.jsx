@@ -1,7 +1,6 @@
 import navValues from "../helpers/NavValues";
 import { useContext } from "react";
 import FlashCardContext from "../Helpers/FlashCardContext";
-// TODO: Add the imports for addFlashCard and deleteFlashCard
 
 
 const Navbar = () => {

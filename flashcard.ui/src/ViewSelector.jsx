@@ -13,10 +13,12 @@ const ViewSelector = () => {
 	switch (currentNavLocation) {
 		case navValues.study:
 			return (
-				<FlashCardList topicID={currentTopicId} />
+				// The selected topic is passed to FlashCardList via context, so no prop is needed here
+				<FlashCardList />
 			);
 		case navValues.manage:
 			return (
+				// The selected topic is passed to ManageFlashCardList via a prop
 				//<ManageFlashCardList topicID={currentTopicId} />
 				<h3>ManageFlashCardList for topic {currentTopicId}</h3>
 			);

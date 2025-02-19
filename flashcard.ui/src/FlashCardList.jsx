@@ -4,19 +4,19 @@ import LoadingIndicator from "./LoadingIndicator";
 import FlashCardContext from "../Helpers/FlashCardContext";
 
 
-const FlashCardList = (props) => {
+const FlashCardList = () => {
     const [flashcards, setFlashCards] = useState([]);
     const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
 
-    // TODO: Document this
-    const { currentNavLocation, currentTopicId, navigate } = useContext(FlashCardContext);
+    // Destructure only the properties from FlashCardContext that I need in this component
+    const { currentTopicId } = useContext(FlashCardContext);
+
 
     const fetchMoreFlashCards = async (shouldResetListFirst, numberOfCards) => {
 
         try {
             setLoadingState(LoadingStatus.isLoading);
 
-            //const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
             const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + currentTopicId + "&NumberOfFlashcards=" + numberOfCards);
 
             const rawFlashCards = await response.json();
@@ -55,10 +55,10 @@ const FlashCardList = (props) => {
     const loadMoreForThisTopic = async () => await fetchMoreFlashCards(false, 5);
 
 
-    // When the topic changes, clear out the list and start fresh
+    // When the selected topic changes, clear out the list and start fresh
     useEffect(() => {
         loadInitialSetForTopic();
-    }, [props.topicID]);
+    }, [currentTopicId]);
 
 
     // When the user gets to the bottom of the existing list of flashcards, load more
