@@ -7,6 +7,6 @@
         public String Answer { get; set; } = "";
         public TopicModel Topic { get; set; } = new TopicModel();
         public String PartitionKey { get; set; } = "";
-        public DateOnly? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

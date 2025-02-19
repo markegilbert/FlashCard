@@ -41,7 +41,7 @@ namespace FlashCard.Controllers
                 // Populate the other necessary properties
                 NewFlashCard.ID = Guid.NewGuid().ToString();
                 NewFlashCard.PartitionKey = NewFlashCard.Topic.ID;
-                NewFlashCard.CreatedOn = DateOnly.FromDateTime(DateTime.Today);
+                NewFlashCard.CreatedOn = DateTime.UtcNow;
 
                 #region Logging
                 this._Logger.LogDebug("Saving the new flashcard");
