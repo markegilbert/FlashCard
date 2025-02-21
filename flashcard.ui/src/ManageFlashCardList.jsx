@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const ManageFlashCardList = (props) =>
 {
+    // TODO: Fix the name of the variable here; it should be be camelcase
     const [flashcards, setFlashCards] = useState([]);
 
     const fetchMostRecentFlashCards = async (numberOfCards) => {
@@ -51,6 +52,37 @@ const ManageFlashCardList = (props) =>
         loadInitialSetForThisTopic();
     }, [props.topicID]);
 
+
+    const deleteFlashCard = async (flashcardID) => {
+        // TODO: Wrap this in a Try...Catch
+        const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard?PartitionKey=" + props.topicID + "&FlashCardID=" + flashcardID, { method: 'DELETE' });
+
+        if (response.ok) {
+            loadInitialSetForThisTopic();
+
+            // TODO: How can I get the component to re-render based on the change to the flashcards array without doing a roundtrip to the API?
+            //       The below code works to update remove the item just deleted from the local flashcards array, but since nothing
+            //       in the ManageFlashCardList component has flashcards in a dependency array, I can't get the component
+            //       to re-render.
+            // Adapted from: https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
+            // const indexOfFlashCardToRemove = flashcards.indexOf(flashcards.find(fc => fc.id == flashcardID));
+            // if (indexOfFlashCardToRemove > -1) {
+            //     flashcards.splice(indexOfFlashCardToRemove, 1);
+            //     setFlashCards(flashcards);
+            // }
+        } else {
+            window.alert("An error occurred deleting this flashcard: HTTP Response Code " + response.status);
+        }
+    };
+
+
+    const handleDeleteFlashCard = (question, flashcardID) => {
+        if (window.confirm("Are you sure you want to delete the flashcard '" + question + "'?")) {
+            deleteFlashCard(flashcardID);
+        }
+    };
+
+
     return (
         <>
             <link href="/css/ManageFlashCardList.css" rel="stylesheet" />
@@ -61,7 +93,11 @@ const ManageFlashCardList = (props) =>
                             <div><strong>Q:</strong> {fc.question}</div>
                             <div><strong>A:</strong> {fc.answer}</div>
                         </div>
-                        <div className="deleteButton"><img src="/images/bin.png" width="25px" /></div>
+                        <div className="deleteButton">
+                            <button onClick={() => handleDeleteFlashCard(fc.question, fc.id) }>
+                                <img src="/images/bin.png" width="25px" />
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
