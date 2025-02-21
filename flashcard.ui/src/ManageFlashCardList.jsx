@@ -131,11 +131,20 @@ const ManageFlashCardList = (props) =>
         <>
             <link href="/css/ManageFlashCardList.css" rel="stylesheet" />
 
-            <form onSubmit={saveFlashCardHandler}>
-                Question*: <input type="text" value={flashCard.question} onChange={(e) => setFlashCard({ ...flashCard, question: e.target.value })} />
-                Answer*: <input type="text" value={flashCard.answer} onChange={(e) => setFlashCard({ ...flashCard, answer: e.target.value })} />
-                <input type="submit" value="Save" />
-            </form>
+            <div className="addFlashCardForm">
+                <form onSubmit={saveFlashCardHandler}>
+                    <div className="formInstructionsText">Fields denoted with * are required.</div>
+                    <div>
+                        <div className="inputLabel">Question *:</div>
+                        <div><textarea value={flashCard.question} onChange={(e) => setFlashCard({ ...flashCard, question: e.target.value })} className="formTextArea" /></div>
+                    </div>
+                    <div>
+                        <div className="inputLabel">Answer *:</div>
+                        <div><textarea value={flashCard.answer} onChange={(e) => setFlashCard({ ...flashCard, answer: e.target.value })} className="formTextArea" /></div>
+                    </div>
+                    <input type="submit" value="Add New" />
+                </form>
+            </div>
 
             <div id="FlashCardContainer">
                 {flashcards.map((fc, index) => (
