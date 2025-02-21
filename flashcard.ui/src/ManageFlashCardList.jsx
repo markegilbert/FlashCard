@@ -6,6 +6,7 @@ const ManageFlashCardList = (props) =>
     // TODO: Fix the name of the variable here; it should be be camelcase
     const [flashcards, setFlashCards] = useState([]);
     const [flashCard, setFlashCard] = useState({ question: "", answer: "", topic: { id: "" } });
+    const [errorMessage, setErrorMessage] = useState("");
 
     const fetchMostRecentFlashCards = async (numberOfCards) => {
 
@@ -48,28 +49,32 @@ const ManageFlashCardList = (props) =>
         // TODO: Wrap this in a Try...Catch
         const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard?PartitionKey=" + props.topicID + "&FlashCardID=" + flashcardID, { method: 'DELETE' });
 
-        if (response.ok) {
-            loadInitialSetForThisTopic();
-
-            // TODO: How can I get the component to re-render based on the change to the flashcards array without doing a roundtrip to the API?
-            //       The below code works to update remove the item just deleted from the local flashcards array, but since nothing
-            //       in the ManageFlashCardList component has flashcards in a dependency array, I can't get the component
-            //       to re-render.
-            // Adapted from: https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
-            // const indexOfFlashCardToRemove = flashcards.indexOf(flashcards.find(fc => fc.id == flashcardID));
-            // if (indexOfFlashCardToRemove > -1) {
-            //     flashcards.splice(indexOfFlashCardToRemove, 1);
-            //     setFlashCards(flashcards);
-            // }
-        } else {
-            window.alert("An error occurred deleting this flashcard: HTTP Response Code " + response.status);
-        }
+        return response;
     };
 
 
-    const handleDeleteFlashCard = (question, flashcardID) => {
+    const handleDeleteFlashCard = async (question, flashcardID) => {
         if (window.confirm("Are you sure you want to delete the flashcard '" + question + "'?")) {
-            deleteFlashCard(flashcardID);
+            const response = await deleteFlashCard(flashcardID);
+
+            if (response.ok) {
+                loadInitialSetForThisTopic();
+
+                // TODO: How can I get the component to re-render based on the change to the flashcards array without doing a roundtrip to the API?
+                //       The below code works to update remove the item just deleted from the local flashcards array, but since nothing
+                //       in the ManageFlashCardList component has flashcards in a dependency array, I can't get the component
+                //       to re-render.
+                // Adapted from: https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
+                // const indexOfFlashCardToRemove = flashcards.indexOf(flashcards.find(fc => fc.id == flashcardID));
+                // if (indexOfFlashCardToRemove > -1) {
+                //     flashcards.splice(indexOfFlashCardToRemove, 1);
+                //     setFlashCards(flashcards);
+                // }
+
+                setErrorMessage("");
+            } else {
+                setErrorMessage("An error occurred deleting this flashcard: HTTP Response Code " + response.status);
+            }
         }
     };
 
@@ -92,11 +97,7 @@ const ManageFlashCardList = (props) =>
                 }
             });
 
-        if (response.ok) {
-            loadInitialSetForThisTopic();
-        } else {
-            window.alert("An error occurred deleting this flashcard: HTTP Response Code " + response.status);
-        }
+        return response;
     };
 
     const resetForm = () => {
@@ -106,12 +107,12 @@ const ManageFlashCardList = (props) =>
         setFlashCard(flashCard);
     };
 
-    const saveFlashCardHandler = (e) => {
+    const handleAddNewFlashCard = async (e) => {
         e.preventDefault();
 
         // Validate the form
         if (!flashCard.question || !flashCard.answer) {
-            alert("Please enter something for all required fields.");
+            setErrorMessage("Please enter something for all required fields.");
             return;
         }
 
@@ -122,8 +123,15 @@ const ManageFlashCardList = (props) =>
         flashCard.topic.topicName = "_";
         setFlashCard(flashCard);
 
-        addNewFlashCard();
-        resetForm();
+
+        const response = await addNewFlashCard();
+        if (response.ok) {
+            loadInitialSetForThisTopic();
+            resetForm();
+            setErrorMessage("");
+        } else {
+            setErrorMessage("An error occurred deleting this flashcard: HTTP Response Code " + response.status);
+        }
     };
 
 
@@ -131,8 +139,10 @@ const ManageFlashCardList = (props) =>
         <>
             <link href="/css/ManageFlashCardList.css" rel="stylesheet" />
 
+            <div className="errorMessage">{errorMessage}</div>
+
             <div className="addFlashCardForm">
-                <form onSubmit={saveFlashCardHandler}>
+                <form onSubmit={handleAddNewFlashCard}>
                     <div className="formInstructionsText">Fields denoted with * are required.</div>
                     <div>
                         <div className="inputLabel">Question *:</div>

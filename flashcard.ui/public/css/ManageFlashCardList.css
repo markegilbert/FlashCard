@@ -54,3 +54,10 @@
     width: 90%;
     max-width: 90%;
 }
+
+.errorMessage {
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2em;
+}
