@@ -79,7 +79,8 @@ namespace FlashCard
                                   policy =>
                                   {
                                       policy.AllowAnyOrigin()
-                                            .WithMethods("GET", "POST", "DELETE");
+                                            .WithMethods("GET", "POST", "DELETE")
+                                            .WithHeaders("Content-Type");
                                   });
             });
 

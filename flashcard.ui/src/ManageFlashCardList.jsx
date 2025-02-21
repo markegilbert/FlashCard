@@ -5,6 +5,7 @@ const ManageFlashCardList = (props) =>
 {
     // TODO: Fix the name of the variable here; it should be be camelcase
     const [flashcards, setFlashCards] = useState([]);
+    const [flashCard, setFlashCard] = useState({ question: "", answer: "", topic: { id: "" } });
 
     const fetchMostRecentFlashCards = async (numberOfCards) => {
 
@@ -18,16 +19,6 @@ const ManageFlashCardList = (props) =>
 
             // If there is an error in the service response, rawFlashCards won't be an array, which means the .map() function will fail.  I have to check the type here.
             if (rawFlashCards instanceof Array) {
-
-                // If the function should reset the list (i.e., because the topic was changed), then just set the flashcards
-                // property to the new list.  Otherwise, append the new list to the existing one (using the Javascript
-                // spread operators on both).
-                //
-                // This conditional is necessary to avoid a race condition.  Previously I was trying to clear out the
-                // flashcards property using setFlashCards([]) and then calling fetchMoreFlashCards.  Since both of those
-                // modified the flashcards property, the first one never fully executed, so new topic's cards were getting
-                // appended to the existing list.  Merging the logic into one method that takes a boolean avoids this
-                // because everything is done here, once.
                 setFlashCards(rawFlashCards);
 
                 // TODO: Uncomment this
@@ -83,9 +74,63 @@ const ManageFlashCardList = (props) =>
     };
 
 
+    // TODO: This needs to be wired up to the form
+    // Capture all changes to the properties in the flashCard state object
+    const propertyChange = ((e) => setFlashCard({ ...flashCard, [e.target.name]: e.target.value }));
+
+
+    const addNewFlashCard = async () => {
+        // TODO: Wrap this in a Try...Catch
+
+        const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard",
+            {
+                method: 'POST',
+                body: JSON.stringify(flashCard),
+                headers:
+                {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+        if (response.ok) {
+            loadInitialSetForThisTopic();
+        } else {
+            window.alert("An error occurred deleting this flashcard: HTTP Response Code " + response.status);
+        }
+    };
+
+    const resetForm = () => {
+        flashCard.question = "";
+        flashCard.answer = "";
+        flashCard.topic.id = "";
+        setFlashCard(flashCard);
+    };
+
+    const saveFlashCardHandler = (e) => {
+        e.preventDefault();
+
+        flashCard.topic.id = props.topicID;
+        // TODO: This is a cheat.  TopicName is required by the API, but is not actually used by the app.  I only pass the ID to the component, so if
+        //       I wanted to get the name, I'd have to make another API call to look it up, or modify the component to take both the ID and the name.
+        //       For now, setting this to an underscore satisfies all of the code, but logically it's clunky.
+        flashCard.topic.topicName = "_";
+        setFlashCard(flashCard);
+
+        addNewFlashCard();
+        resetForm();
+    };
+
+
     return (
         <>
             <link href="/css/ManageFlashCardList.css" rel="stylesheet" />
+
+            <form onSubmit={saveFlashCardHandler}>
+                Question: <input type="text" value={flashCard.question} onChange={(e) => setFlashCard({ ...flashCard, question: e.target.value })} />
+                Answer: <input type="text" value={flashCard.answer} onChange={(e) => setFlashCard({ ...flashCard, answer: e.target.value })} />
+                <input type="submit" value="Save" />
+            </form>
+
             <div id="FlashCardContainer">
                 {flashcards.map((fc, index) => (
                     <div className="flashCardManagementContainer" key={index} id={index}>
