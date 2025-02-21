@@ -109,6 +109,12 @@ const ManageFlashCardList = (props) =>
     const saveFlashCardHandler = (e) => {
         e.preventDefault();
 
+        // Validate the form
+        if (!flashCard.question || !flashCard.answer) {
+            alert("Please enter something for all required fields.");
+            return;
+        }
+
         flashCard.topic.id = props.topicID;
         // TODO: This is a cheat.  TopicName is required by the API, but is not actually used by the app.  I only pass the ID to the component, so if
         //       I wanted to get the name, I'd have to make another API call to look it up, or modify the component to take both the ID and the name.
@@ -126,8 +132,8 @@ const ManageFlashCardList = (props) =>
             <link href="/css/ManageFlashCardList.css" rel="stylesheet" />
 
             <form onSubmit={saveFlashCardHandler}>
-                Question: <input type="text" value={flashCard.question} onChange={(e) => setFlashCard({ ...flashCard, question: e.target.value })} />
-                Answer: <input type="text" value={flashCard.answer} onChange={(e) => setFlashCard({ ...flashCard, answer: e.target.value })} />
+                Question*: <input type="text" value={flashCard.question} onChange={(e) => setFlashCard({ ...flashCard, question: e.target.value })} />
+                Answer*: <input type="text" value={flashCard.answer} onChange={(e) => setFlashCard({ ...flashCard, answer: e.target.value })} />
                 <input type="submit" value="Save" />
             </form>
 
