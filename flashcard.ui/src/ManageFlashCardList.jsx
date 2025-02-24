@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import LoadingStatus from "../Helpers/LoadingStatus";
+import LoadingIndicator from "./LoadingIndicator";
 
 
 const ManageFlashCardList = (props) =>
@@ -6,12 +8,20 @@ const ManageFlashCardList = (props) =>
     const [flashCards, setFlashCards] = useState([]);
     const [flashCard, setFlashCard] = useState({ question: "", answer: "", topic: { id: "" } });
     const [errorMessage, setErrorMessage] = useState("");
+    const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
+
+
+    // TODO: Remove this when done testing
+    //const delay = ms => new Promise(res => setTimeout(res, ms));
+
 
     const fetchMostRecentFlashCards = async (numberOfCards) => {
 
         try {
-            // TODO: Uncomment this
-            //setLoadingState(LoadingStatus.isLoading);
+            setLoadingState(LoadingStatus.isLoading);
+
+            // TODO: Remove this when done testing
+            //await delay(5000);
 
             const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards + "&OrderBy=-CreatedOn");
 
@@ -21,8 +31,7 @@ const ManageFlashCardList = (props) =>
             if (rawFlashCards instanceof Array) {
                 setFlashCards(rawFlashCards);
 
-                // TODO: Uncomment this
-                //setLoadingState(LoadingStatus.loaded);
+                setLoadingState(LoadingStatus.loaded);
             }
 
         }
@@ -43,17 +52,9 @@ const ManageFlashCardList = (props) =>
     }, [props.topicID]);
 
 
-    const deleteFlashCard = async (flashcardID) => {
-        // TODO: Wrap this in a Try...Catch
-        const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard?PartitionKey=" + props.topicID + "&FlashCardID=" + flashcardID, { method: 'DELETE' });
-
-        return response;
-    };
-
-
     const handleDeleteFlashCard = async (question, flashcardID) => {
         if (window.confirm("Are you sure you want to delete the flashcard '" + question + "'?")) {
-            const response = await deleteFlashCard(flashcardID);
+            const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard?PartitionKey=" + props.topicID + "&FlashCardID=" + flashcardID, { method: 'DELETE' });
 
             if (response.ok) {
                 loadInitialSetForThisTopic();
@@ -84,8 +85,7 @@ const ManageFlashCardList = (props) =>
 
 
     const addNewFlashCard = async () => {
-        // TODO: Wrap this in a Try...Catch
-
+        // Move this line back into the handleAddNewFlashCard method
         const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard",
             {
                 method: 'POST',
@@ -134,6 +134,29 @@ const ManageFlashCardList = (props) =>
     };
 
 
+    const FlashCardList = () => {
+        if (loadingState != LoadingStatus.loaded) { return null; }
+
+        return (
+            <div id="FlashCardContainer">
+                {flashCards.map((fc, index) => (
+                    <div className="flashCardManagementContainer" key={index} id={index}>
+                        <div className="flashCardQAndA">
+                            <div><strong>Q:</strong> {fc.question}</div>
+                            <div><strong>A:</strong> {fc.answer}</div>
+                        </div>
+                        <div className="deleteButton">
+                            <button onClick={() => handleDeleteFlashCard(fc.question, fc.id)}>
+                                <img src="/images/bin.png" width="25px" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+
     return (
         <>
             <link href="/css/ManageFlashCardList.css" rel="stylesheet" />
@@ -155,21 +178,8 @@ const ManageFlashCardList = (props) =>
                 </form>
             </div>
 
-            <div id="FlashCardContainer">
-                {flashCards.map((fc, index) => (
-                    <div className="flashCardManagementContainer" key={index} id={index}>
-                        <div className="flashCardQAndA">
-                            <div><strong>Q:</strong> {fc.question}</div>
-                            <div><strong>A:</strong> {fc.answer}</div>
-                        </div>
-                        <div className="deleteButton">
-                            <button onClick={() => handleDeleteFlashCard(fc.question, fc.id) }>
-                                <img src="/images/bin.png" width="25px" />
-                            </button>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <LoadingIndicator loadingState={loadingState} hasErrorMessage="There was a problem retrieving the list of flashcards.  Please verify that the services are running." />
+            <FlashCardList />
         </>
     );
 };
