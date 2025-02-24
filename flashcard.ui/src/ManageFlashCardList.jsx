@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 
 const ManageFlashCardList = (props) =>
 {
-    // TODO: Fix the name of the variable here; it should be be camelcase
-    const [flashcards, setFlashCards] = useState([]);
+    const [flashCards, setFlashCards] = useState([]);
     const [flashCard, setFlashCard] = useState({ question: "", answer: "", topic: { id: "" } });
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -28,9 +27,8 @@ const ManageFlashCardList = (props) =>
 
         }
         catch (ex) {
-            // TODO: Uncomment this
             // TODO: Log the error
-            //setLoadingState(LoadingStatus.hasError);
+            setErrorMessage("An error occurred retrieving the flashcards for this topic.");
         }
 
     };
@@ -60,10 +58,10 @@ const ManageFlashCardList = (props) =>
             if (response.ok) {
                 loadInitialSetForThisTopic();
 
-                // TODO: How can I get the component to re-render based on the change to the flashcards array without doing a roundtrip to the API?
-                //       The below code works to update remove the item just deleted from the local flashcards array, but since nothing
-                //       in the ManageFlashCardList component has flashcards in a dependency array, I can't get the component
-                //       to re-render.
+                // TODO: How can I get the component to re-render based on the change to the flashcards array without doing a
+                //       roundtrip to the API?  The below code works to update remove the item just deleted from the local
+                //       flashcards array, but since nothing in the ManageFlashCardList component has flashcards in a
+                //       dependency array, I can't get the component to re-render.
                 // Adapted from: https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript
                 // const indexOfFlashCardToRemove = flashcards.indexOf(flashcards.find(fc => fc.id == flashcardID));
                 // if (indexOfFlashCardToRemove > -1) {
@@ -79,9 +77,10 @@ const ManageFlashCardList = (props) =>
     };
 
 
-    // TODO: This needs to be wired up to the form
-    // Capture all changes to the properties in the flashCard state object
-    const propertyChange = ((e) => setFlashCard({ ...flashCard, [e.target.name]: e.target.value }));
+    // Persist all changes to the e.target property to the flashCard state object
+    const handlePropertyChange = ((e) => {
+        setFlashCard({ ...flashCard, [e.target.name]: e.target.value })
+    });
 
 
     const addNewFlashCard = async () => {
@@ -146,18 +145,18 @@ const ManageFlashCardList = (props) =>
                     <div className="formInstructionsText">Fields denoted with * are required.</div>
                     <div>
                         <div className="inputLabel">Question *:</div>
-                        <div><textarea value={flashCard.question} onChange={(e) => setFlashCard({ ...flashCard, question: e.target.value })} className="formTextArea" /></div>
+                        <div><textarea value={flashCard.question} name="question" onChange={(e) => handlePropertyChange(e)} className="formTextArea" /></div>
                     </div>
                     <div>
                         <div className="inputLabel">Answer *:</div>
-                        <div><textarea value={flashCard.answer} onChange={(e) => setFlashCard({ ...flashCard, answer: e.target.value })} className="formTextArea" /></div>
+                        <div><textarea value={flashCard.answer} name="answer" onChange={(e) => handlePropertyChange(e)} className="formTextArea" /></div>
                     </div>
                     <input type="submit" value="Add New" />
                 </form>
             </div>
 
             <div id="FlashCardContainer">
-                {flashcards.map((fc, index) => (
+                {flashCards.map((fc, index) => (
                     <div className="flashCardManagementContainer" key={index} id={index}>
                         <div className="flashCardQAndA">
                             <div><strong>Q:</strong> {fc.question}</div>
