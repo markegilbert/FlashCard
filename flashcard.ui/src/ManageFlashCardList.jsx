@@ -11,17 +11,12 @@ const ManageFlashCardList = (props) =>
     const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
 
 
-    // TODO: Remove this when done testing
-    //const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
     const fetchMostRecentFlashCards = async (numberOfCards) => {
 
         try {
             setLoadingState(LoadingStatus.isLoading);
-
-            // TODO: Remove this when done testing
-            //await delay(2000);
 
             const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards + "&OrderBy=-CreatedOn");
 
@@ -35,8 +30,7 @@ const ManageFlashCardList = (props) =>
             }
 
         }
-        catch (ex) {
-            // TODO: Log the error
+        catch {
             setErrorMessage("An error occurred retrieving the flashcards for this topic.");
         }
 
