@@ -21,7 +21,7 @@ const ManageFlashCardList = (props) =>
             setLoadingState(LoadingStatus.isLoading);
 
             // TODO: Remove this when done testing
-            //await delay(5000);
+            //await delay(2000);
 
             const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards + "&OrderBy=-CreatedOn");
 
@@ -84,21 +84,6 @@ const ManageFlashCardList = (props) =>
     });
 
 
-    const addNewFlashCard = async () => {
-        // Move this line back into the handleAddNewFlashCard method
-        const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard",
-            {
-                method: 'POST',
-                body: JSON.stringify(flashCard),
-                headers:
-                {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-        return response;
-    };
-
     const resetForm = () => {
         flashCard.question = "";
         flashCard.answer = "";
@@ -123,7 +108,15 @@ const ManageFlashCardList = (props) =>
         setFlashCard(flashCard);
 
 
-        const response = await addNewFlashCard();
+        const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCard",
+            {
+                method: 'POST',
+                body: JSON.stringify(flashCard),
+                headers:
+                {
+                    'Content-Type': 'application/json'
+                }
+            });
         if (response.ok) {
             loadInitialSetForThisTopic();
             resetForm();
@@ -163,7 +156,7 @@ const ManageFlashCardList = (props) =>
 
             <div className="errorMessage">{errorMessage}</div>
 
-            <div className="addFlashCardForm">
+            <div className={loadingState == LoadingStatus.loaded ? "addFlashCardForm" : "hideContainer"}>
                 <form onSubmit={handleAddNewFlashCard}>
                     <div className="formInstructionsText">Fields denoted with * are required.</div>
                     <div>

@@ -61,3 +61,7 @@
     font-weight: 700;
     margin-bottom: 2em;
 }
+
+.hideContainer {
+    display: none;
+}
