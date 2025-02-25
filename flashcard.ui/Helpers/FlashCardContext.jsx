@@ -1,4 +1,4 @@
-import navValues from "./navValues";
+import navValues from "./NavValues";
 import { createContext } from "react";
 
 const FlashCardContext = createContext({
