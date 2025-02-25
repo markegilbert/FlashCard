@@ -166,7 +166,12 @@ const ManageFlashCardList = (props) =>
             </div>
 
             <LoadingIndicator loadingState={loadingState} hasErrorMessage="There was a problem retrieving the list of flashcards.  Please verify that the services are running." />
+
             <FlashCardList />
+
+            <div className="footer">
+                <a href="https://www.flaticon.com/free-icons/delete" title="delete icons" target="_blank">Delete icons created by Freepik - Flaticon</a>
+            </div>
         </>
     );
 };
