@@ -1,11 +1,15 @@
+:root {
+    --manage-screen-base-color: #FADCD9;  /* Rose Quartz */
+}
+
 .flashCardManagementContainer {
-    background-color: #FADCD9;      /* Rose Quartz */
+    background-color: var(--manage-screen-base-color);
     text-align: left;
     margin: 5px;
     padding: 5px;
     border: 2px solid black;
-    overflow: hidden;               /* This is needed to prevent the child DIVs from overlapping each other */
-    position: relative;             /* This is needed to get the delete icon to align vertically; see .deleteButton below */
+    overflow: hidden; /* This is needed to prevent the child DIVs from overlapping each other */
+    position: relative; /* This is needed to get the delete icon to align vertically; see .deleteButton below */
 }
 
 .flashCardQAndA {
@@ -34,7 +38,7 @@
 
 
 .addFlashCardForm {
-    background-color: #FADCD9;
+    background-color: var(--manage-screen-base-color);
     margin-bottom: 20px;
     padding: 1em 0 1em 0;
 }
@@ -72,9 +76,10 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #FADCD9;
+    background-color: var(--manage-screen-base-color);
     color: white;
     text-align: center;
+    border-top: 2px solid black;
 }
 
 .footer a {
