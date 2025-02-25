@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import navValues from "./navValues";
+import navValues from "./NavValues";
 import FlashCardContext from './FlashCardContext';
 
 
