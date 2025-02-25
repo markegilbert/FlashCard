@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import navValues from "../helpers/NavValues";
+import navValues from "../Helpers/NavValues";
 import FlashCardContext from "../Helpers/FlashCardContext";
 import FlashCardList from "./FlashCardList"
 import ManageFlashCardList from "./ManageFlashCardList";
