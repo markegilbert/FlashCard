@@ -1,5 +1,12 @@
+:root {
+    --study-screen-base-color: lightblue;
+    --manage-screen-base-color: #FADCD9; /* Rose Quartz */
+
+}
+
 .navbar {
     display: block;     /* This is needed to prevent the contents of the top-level from overwriting the struture above the navbar. */
+    margin-top: 1em;
 }
 
 ul {
@@ -13,7 +20,7 @@ ul {
 
         /* The styling for the link for the current active state */
         ul li div {
-            background-color: lightblue;
+            background-color: var(--study-screen-base-color);
             margin: 0px 10px;
             padding: 10px;
             display: inline; /* Required with a div to prevent it from taking up the entire width of the screen. */
