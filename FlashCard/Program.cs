@@ -72,12 +72,15 @@ namespace FlashCard
 
             // Configure the CORS policy
             // Source: https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-9.0
+            // Source: https://dev.to/fabriziobagala/cors-in-aspnet-core-4hl2
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: CORS_POLICY_NAME, 
                                   policy =>
                                   {
-                                      policy.AllowAnyOrigin();
+                                      policy.AllowAnyOrigin()
+                                            .WithMethods("GET", "POST", "DELETE")
+                                            .WithHeaders("Content-Type");
                                   });
             });
 

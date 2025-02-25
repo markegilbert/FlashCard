@@ -1,0 +1,89 @@
+:root {
+    --manage-screen-base-color: #FADCD9;  /* Rose Quartz */
+}
+
+.flashCardManagementContainer {
+    background-color: var(--manage-screen-base-color);
+    text-align: left;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid black;
+    overflow: hidden; /* This is needed to prevent the child DIVs from overlapping each other */
+    position: relative; /* This is needed to get the delete icon to align vertically; see .deleteButton below */
+}
+
+.flashCardQAndA {
+    /* These are needed to build in room visually for the delete button on the right side of each DIV */
+    width: 80%;
+    float: left;
+}
+.deleteButton {
+    /* This forces the delete button to appear on the right side of the flashcard DIV. */
+    float: right;
+    /* This next group of styles, in conjunction with the flashCardManagementContainer class' "position: relative",
+        is required to get the delete icon to align vertically within the parent */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+    justify-content: center;
+    align-content: center;
+}
+
+.deleteButton button {
+    border: 0px;
+    background: transparent;
+}
+
+
+
+.addFlashCardForm {
+    background-color: var(--manage-screen-base-color);
+    margin-bottom: 20px;
+    padding: 1em 0 1em 0;
+}
+
+.formInstructionsText {
+    text-align: right;
+    padding-right: 5%;
+    font-style: italic;
+}
+
+.inputLabel {
+    text-align: left;
+    padding-left: 5%;
+    font-weight: 700;
+}
+.formTextArea {
+    width: 90%;
+    max-width: 90%;
+}
+
+.errorMessage {
+    background-color: red;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2em;
+}
+
+.hideContainer {
+    display: none;
+}
+
+/* Source: https://www.w3schools.com/howto/howto_css_fixed_footer.asp */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--manage-screen-base-color);
+    color: white;
+    text-align: center;
+    border-top: 2px solid black;
+}
+
+.footer a {
+    text-decoration: none;
+    color: black;
+    font-size: .8em;
+}

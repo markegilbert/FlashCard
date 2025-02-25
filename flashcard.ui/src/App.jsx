@@ -1,19 +1,23 @@
 import TopicSelection from "./TopicSelection"
-import FlashCardList from "./FlashCardList"
-import { useState } from "react";
+import Navbar from "./Navbar";
+import FlashCardContextProvider from "../Helpers/FlashCardContextProvider";
+import ViewSelector from "./ViewSelector";
 
 
-function App() {
-    const [topicSelected, setTopicSelection] = useState("");
-
+const App = () => {
     return (
-        <>
+        <FlashCardContextProvider>
             <link href="/css/App.css" rel="stylesheet" />
 
-            <TopicSelection onSelectTopic={(topicSelected) => setTopicSelection(topicSelected)} />
-            <FlashCardList topicID={topicSelected} />
-        </>
+            <div className="sticky-div">
+                <TopicSelection />
+                <Navbar />
+            </div>
+
+            <ViewSelector />
+        </FlashCardContextProvider>
     )
 }
 
-export default App
+export default App;
+

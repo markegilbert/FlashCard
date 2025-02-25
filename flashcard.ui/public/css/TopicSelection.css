@@ -1,7 +1,0 @@
-/* Source: https://www.geeksforgeeks.org/how-to-make-a-div-stick-to-the-top-of-the-screen/ */
-.sticky-div {
-    background-color: white;
-    position: sticky;
-    top: 0px;
-    padding: 5px 0px;
-}

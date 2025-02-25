@@ -27,15 +27,15 @@ namespace FlashCard.Controllers
         }
 
         [HttpGet(Name = "GetFlashCards")]
-        public async Task<IEnumerable<FlashCardModel>> Get([FromQuery] String TopicID, [FromQuery] int NumberOfFlashcards)
+        public async Task<IEnumerable<FlashCardModel>> Get([FromQuery] String TopicID, [FromQuery] int NumberOfFlashcards, [FromQuery] String? OrderBy)
         {
             try
             {
                 #region Logging
-                this._Logger.LogDebug("About to return the list of random flash cards");
+                this._Logger.LogDebug($"About to return the list of {NumberOfFlashcards} flash cards for topic '{TopicID}', {(String.IsNullOrEmpty(OrderBy) ? "randomized" : "ordered by " + OrderBy)}");
                 #endregion
 
-                return await this._Repository.GetRandomFlashCardsByTopic(TopicID, NumberOfFlashcards);
+                return await this._Repository.GetFlashCardsByTopic(TopicID, NumberOfFlashcards, OrderBy);
             }
             catch (Exception ex)
             {

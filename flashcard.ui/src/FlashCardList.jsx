@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import LoadingStatus from "../Helpers/LoadingStatus";
 import LoadingIndicator from "./LoadingIndicator";
+import FlashCardContext from "../Helpers/FlashCardContext";
 
 
-const FlashCardList = (props) => {
+const FlashCardList = () => {
     const [flashcards, setFlashCards] = useState([]);
     const [loadingState, setLoadingState] = useState(LoadingStatus.isLoading);
+
+    // Destructure only the properties from FlashCardContext that I need in this component
+    const { currentTopicId } = useContext(FlashCardContext);
 
 
     const fetchMoreFlashCards = async (shouldResetListFirst, numberOfCards) => {
@@ -13,7 +17,8 @@ const FlashCardList = (props) => {
         try {
             setLoadingState(LoadingStatus.isLoading);
 
-            const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + props.topicID + "&NumberOfFlashcards=" + numberOfCards);
+            const response = await fetch(import.meta.env.FLASHCARD_SERVICE_BASE_URL + "/api/FlashCards?TopicID=" + currentTopicId + "&NumberOfFlashcards=" + numberOfCards);
+
             const rawFlashCards = await response.json();
 
             // If there is an error in the service response, rawFlashCards won't be an array, which means the .map() function will fail.  I have to check the type here.
@@ -50,10 +55,10 @@ const FlashCardList = (props) => {
     const loadMoreForThisTopic = async () => await fetchMoreFlashCards(false, 5);
 
 
-    // When the topic changes, clear out the list and start fresh
+    // When the selected topic changes, clear out the list and start fresh
     useEffect(() => {
         loadInitialSetForTopic();
-    }, [props.topicID]);
+    }, [currentTopicId]);
 
 
     // When the user gets to the bottom of the existing list of flashcards, load more
