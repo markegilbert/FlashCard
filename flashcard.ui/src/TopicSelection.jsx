@@ -49,6 +49,7 @@ const TopicSelection = () => {
     }, []);
 
 
+    // TODO: This could probably be merged with the updateSelectedTopic method.  The extra layer of abstraction here is not needed.
     const handleChange = (selectedID) => {
         updateSelectedTopic(selectedID);
     };
@@ -59,7 +60,7 @@ const TopicSelection = () => {
         if (topics.length == 0) { return null; }
         else {
             return (
-                <div className="sticky-div">
+                <div>
                     <select id="TopicSelection" onChange={(e) => handleChange(e.target.options[e.target.selectedIndex].id)} value={topicID}>
                         {topics.map(t => <option key={t.id} id={t.id} value={t.id}>{t.topicName}</option>)}
                     </select>
