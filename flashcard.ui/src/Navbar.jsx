@@ -1,4 +1,4 @@
-import navValues from "../helpers/NavValues";
+import navValues from "../Helpers/NavValues";
 import { useContext } from "react";
 import FlashCardContext from "../Helpers/FlashCardContext";
 
