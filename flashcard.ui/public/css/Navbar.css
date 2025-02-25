@@ -4,9 +4,11 @@
 
 }
 
+
 .navbar {
-    display: block;     /* This is needed to prevent the contents of the top-level from overwriting the struture above the navbar. */
-    margin-top: 1em;
+    display: block; /* This is needed to prevent the contents of the top-level from overwriting the struture above the navbar. */
+    margin-top: .75em;
+    margin-bottom: 0em;
 }
 
 ul {
@@ -20,7 +22,6 @@ ul {
 
         /* The styling for the link for the current active state */
         ul li div {
-            background-color: var(--study-screen-base-color);
             margin: 0px 10px;
             padding: 10px;
             display: inline; /* Required with a div to prevent it from taking up the entire width of the screen. */
@@ -37,3 +38,11 @@ ul {
             text-decoration: none;  /* Removes the underlining from hyperlinks */
             color: black;
         }
+
+.study-container {
+    background-color: var(--study-screen-base-color);
+}
+
+.manage-container {
+    background-color: var(--manage-screen-base-color);
+}

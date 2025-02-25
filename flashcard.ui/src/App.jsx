@@ -9,8 +9,11 @@ const App = () => {
         <FlashCardContextProvider>
             <link href="/css/App.css" rel="stylesheet" />
 
-            <TopicSelection/>
-            <Navbar />
+            <div className="sticky-div">
+                <TopicSelection />
+                <Navbar />
+            </div>
+
             <ViewSelector />
         </FlashCardContextProvider>
     )

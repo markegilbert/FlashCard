@@ -15,7 +15,7 @@ const Navbar = () => {
 					<link href="/css/Navbar.css" rel="stylesheet" />
 					<div className="navbar">
 						<ul>
-							<li><div>Study</div></li>
+							<li><div className="study-container">Study</div></li>
 							<li><a href="#" onClick={() => navigate(navValues.manage, currentTopicId)}>Manage</a></li>
 						</ul>
 					</div>
@@ -28,7 +28,7 @@ const Navbar = () => {
 					<div className="navbar">
 						<ul>
 							<li><a href="#" onClick={() => navigate(navValues.study, currentTopicId)}>Study</a></li>
-							<li><div>Manage</div></li>
+							<li><div className="manage-container">Manage</div></li>
 						</ul>
 					</div>
 				</>
