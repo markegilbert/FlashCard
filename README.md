@@ -2,7 +2,9 @@
 
 This application presents a series of flashcards to the user.  Each flashcard has a question on one side, and the answer on the other, mirroring an IRL flash card.  The flashcards are organized by topic, and are presented in a randomized, infinite list.
 
-For a quick walkthrough of the user experience, please see: https://youtu.be/RanuGF-EJ1o
+The application also provides a basic maintenance screen that allows you to add or remove flashcards.
+
+For a quick walkthrough of the user experience, please see: https://youtu.be/77LLIT2ZOt8
 
 ## Technologies used for this application:
 - React
