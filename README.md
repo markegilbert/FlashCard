@@ -4,7 +4,7 @@ This application presents a series of flashcards to the user.  Each flashcard ha
 
 The application also provides a basic maintenance screen that allows you to add or remove flashcards.
 
->> **For a quick walkthrough of the user experience, please see: https://youtu.be/77LLIT2ZOt8**
+> **For a quick walkthrough of the user experience, please see: https://youtu.be/77LLIT2ZOt8**
 
 ## Technologies used for this application:
 - React
